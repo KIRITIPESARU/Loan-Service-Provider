@@ -28,7 +28,7 @@ const WelcomeBanner = ({ userName }) => {
               <i className="fas fa-plus-circle"></i> Apply Loan
             </button>
             <button 
-              onClick={() => navigate('/applications')}
+              onClick={() => navigate('/loans-summary')}
               className="view-apps-btn px-6 py-3 bg-white border border-slate-300 text-slate-700 rounded-xl font-medium hover:bg-slate-50 transition-all flex items-center gap-2"
             >
               <i className="fas fa-folder-open"></i> View Applications
