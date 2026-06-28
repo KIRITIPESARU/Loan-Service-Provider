@@ -4,27 +4,68 @@ import { useState } from 'react';
 export const useApi = () => {
   const [loading, setLoading] = useState(false);
 
+  // Date generators
+  const getRelativeDateStr = (daysOffset, format = 'short') => {
+    const d = new Date();
+    d.setDate(d.getDate() + daysOffset);
+    if (format === 'long') {
+      return d.toLocaleDateString('en-US', { day: '2-digit', month: 'long', year: 'numeric' }); // e.g., 10 June 2026
+    }
+    return d.toLocaleDateString('en-US', { month: 'short', day: '2-digit', year: 'numeric' }); // e.g., May 10, 2026
+  };
+
+  const todayStr = getRelativeDateStr(0);
+  const yesterdayStr = getRelativeDateStr(-1);
+  const nextMonthLong = getRelativeDateStr(30, 'long');
+  const past5 = getRelativeDateStr(-5);
+  const past30 = getRelativeDateStr(-30);
+  const past60 = getRelativeDateStr(-60);
+
   // Deep mocked data store
   const mockData = {
     '/user/dashboard/stats': {
       activeLoans: 2,
       totalBorrowed: 450000,
-      nextPayment: '10 June 2026',
+      nextPayment: nextMonthLong,
       creditScore: 785
     },
     '/user/dashboard/activity': [
-      { id: 1, title: 'Loan EMI Paid', date: 'May 10, 2026', type: 'payment', amount: '₹12,450', status: 'success' },
-      { id: 2, title: 'KYC Verification', date: 'May 05, 2026', type: 'kyc', status: 'verified' },
-      { id: 3, title: 'Home Loan Approved', date: 'Apr 28, 2026', type: 'loan', amount: '₹3,00,000', status: 'approved' },
-      { id: 4, title: 'Bank Account Linked', date: 'Apr 25, 2026', type: 'bank', status: 'linked' }
+      { id: 1, title: 'Loan EMI Paid', date: past5, type: 'payment', amount: '₹12,450', status: 'success' },
+      { id: 2, title: 'KYC Verification', date: past30, type: 'kyc', status: 'verified' },
+      { id: 3, title: 'Home Loan Approved', date: past60, type: 'loan', amount: '₹3,00,000', status: 'approved' },
+      { id: 4, title: 'Bank Account Linked', date: past60, type: 'bank', status: 'linked' }
     ],
-    '/user/loans/summary': {
+    '/user/loan/summary': {
       activeLoansCount: 2,
       totalPrincipal: 450000,
       totalEMI: 18500,
       loans: [
-        { id: 'LN-1092', amount: 300000, purpose: 'Home Renovation', emi: 12450, tenure: 24, status: 'active', lender: 'SBI', nextEMI: '10 June 2026' },
-        { id: 'LN-8832', amount: 150000, purpose: 'Education', emi: 6050, tenure: 30, status: 'active', lender: 'HDFC', nextEMI: '10 June 2026' }
+        { 
+          id: 'LN-1092', 
+          name: 'Home Renovation Loan',
+          amount: 300000, 
+          remainingAmount: 250000,
+          tenure: 24, 
+          remainingTenure: 20,
+          emi: 12450, 
+          status: 'Active', 
+          lender: 'SBI', 
+          nextDue: nextMonthLong,
+          progress: 30
+        },
+        { 
+          id: 'LN-8832', 
+          name: 'Education Loan',
+          amount: 150000, 
+          remainingAmount: 140000,
+          tenure: 30, 
+          remainingTenure: 28,
+          emi: 6050, 
+          status: 'Active', 
+          lender: 'HDFC', 
+          nextDue: nextMonthLong,
+          progress: 10
+        }
       ]
     },
     '/user/credit-score': {
@@ -50,14 +91,14 @@ export const useApi = () => {
       { id: 'OF-03', title: 'Car Loan Express Approval', amount: 800000, interestRate: 9.2, tenure: 48, processingFee: '₹2,500' }
     ],
     '/notifications': [
-      { id: 1, title: 'EMI Reminder', message: 'Your monthly payment of ₹12,450 for Loan LN-1092 is due on June 10, 2026.', read: false, time: '2 hours ago' },
+      { id: 1, title: 'EMI Reminder', message: `Your monthly payment of ₹12,450 for Loan LN-1092 is due on ${nextMonthLong}.`, read: false, time: '2 hours ago' },
       { id: 2, title: 'KYC Document Verified', message: 'Your PAN and Aadhaar identity details have been successfully verified.', read: true, time: '1 day ago' },
       { id: 3, title: 'Special Offer Just For You!', message: 'Unlock a pre-approved personal loan at an exclusive interest rate of 10.5% p.a.', read: true, time: '3 days ago' }
     ],
     '/user/documents': [
-      { id: 'doc-1', name: 'PAN Card.pdf', type: 'PAN', status: 'verified', size: '1.2 MB', date: 'May 04, 2026' },
-      { id: 'doc-2', name: 'Aadhaar Card.pdf', type: 'Aadhaar', status: 'verified', size: '2.4 MB', date: 'May 04, 2026' },
-      { id: 'doc-3', name: 'Salary Slips 3 Months.pdf', type: 'Income', status: 'pending', size: '4.8 MB', date: 'May 12, 2026' }
+      { id: 'doc-1', name: 'PAN Card.pdf', type: 'PAN', status: 'verified', size: '1.2 MB', date: past30 },
+      { id: 'doc-2', name: 'Aadhaar Card.pdf', type: 'Aadhaar', status: 'verified', size: '2.4 MB', date: past30 },
+      { id: 'doc-3', name: 'Salary Slips 3 Months.pdf', type: 'Income', status: 'pending', size: '4.8 MB', date: past5 }
     ],
     '/user/bank-accounts': [
       { id: 'bk-1', bankName: 'State Bank of India', accountNumber: '•••• 1234 5678', accountType: 'Savings', status: 'primary', isVerified: true },
@@ -75,9 +116,9 @@ export const useApi = () => {
       ]
     },
     '/user/consents': [
-      { id: 'c-1', title: 'Credit Bureau Query Consent', purpose: 'Allow retrieval of credit bureau score (CIBIL/Equifax) for eligibility assessment.', status: true, date: 'May 01, 2026' },
-      { id: 'c-2', title: 'Aadhaar e-KYC Data Consent', purpose: 'Allow extraction of demographics data from UIDAI registry.', status: true, date: 'May 01, 2026' },
-      { id: 'c-3', title: 'Marketing Communications', purpose: 'Send newsletters, promotional schemes, and loan offers.', status: false, date: 'May 01, 2026' }
+      { id: 'c-1', title: 'Credit Bureau Query Consent', purpose: 'Allow retrieval of credit bureau score (CIBIL/Equifax) for eligibility assessment.', status: true, date: past30 },
+      { id: 'c-2', title: 'Aadhaar e-KYC Data Consent', purpose: 'Allow extraction of demographics data from UIDAI registry.', status: true, date: past30 },
+      { id: 'c-3', title: 'Marketing Communications', purpose: 'Send newsletters, promotional schemes, and loan offers.', status: false, date: past30 }
     ],
     '/admin/stats': {
       totalUsers: 1450,
@@ -98,8 +139,8 @@ export const useApi = () => {
       { id: 'LN-9010', user: 'Vikram Singh', amount: 1500000, purpose: 'Home', status: 'disbursed', date: 'Yesterday' }
     ],
     '/support/tickets': [
-      { id: 'TK-1002', subject: 'EMI Payment Delay Request', status: 'open', category: 'Repayment', date: 'May 28, 2026', repliesCount: 2 },
-      { id: 'TK-9921', subject: 'KYC Document Failed', status: 'closed', category: 'Verification', date: 'May 10, 2026', repliesCount: 4 }
+      { id: 'TK-1002', subject: 'EMI Payment Delay Request', status: 'open', category: 'Repayment', date: todayStr, repliesCount: 2 },
+      { id: 'TK-9921', subject: 'KYC Document Failed', status: 'closed', category: 'Verification', date: past5, repliesCount: 4 }
     ]
   };
 
@@ -126,10 +167,10 @@ export const useApi = () => {
             loanId: 'LN-1092',
             currentStep: 3,
             steps: [
-              { id: 1, name: 'Application Submitted', status: 'completed', date: 'May 01, 2026', description: 'Application received and registered successfully.' },
-              { id: 2, name: 'KYC verification', status: 'completed', date: 'May 04, 2026', description: 'PAN & Aadhaar documents verified.' },
-              { id: 3, name: 'Lender Matching', status: 'completed', date: 'May 06, 2026', description: 'Matched with State Bank of India.' },
-              { id: 4, name: 'Document Verification', status: 'current', date: 'May 12, 2026', description: 'Salary slips under detailed review.' },
+              { id: 1, name: 'Application Submitted', status: 'completed', date: past30, description: 'Application received and registered successfully.' },
+              { id: 2, name: 'KYC verification', status: 'completed', date: getRelativeDateStr(-27), description: 'PAN & Aadhaar documents verified.' },
+              { id: 3, name: 'Lender Matching', status: 'completed', date: getRelativeDateStr(-25), description: 'Matched with State Bank of India.' },
+              { id: 4, name: 'Document Verification', status: 'current', date: past5, description: 'Salary slips under detailed review.' },
               { id: 5, name: 'e-Sign Agreement', status: 'upcoming', date: null, description: 'Sign agreement using Aadhaar OTP.' },
               { id: 6, name: 'Fund Disbursal', status: 'upcoming', date: null, description: 'Direct transfer to primary bank account.' }
             ]
@@ -152,7 +193,6 @@ export const useApi = () => {
           return;
         }
 
-        // /loans/:id (Details)
         if (pathOnly.match(/^\/loans\/[A-Za-z0-9-]+$/)) {
           resolve({
             id: 'LN-1092',
@@ -163,8 +203,8 @@ export const useApi = () => {
             interestRate: 12,
             status: 'active',
             lender: 'SBI',
-            disbursalDate: 'May 08, 2026',
-            nextEMI: '10 June 2026',
+            disbursalDate: past30,
+            nextEMI: nextMonthLong,
             paidEMIs: 1,
             repaidAmount: 12450,
             remainingPrincipal: 287550
@@ -172,17 +212,16 @@ export const useApi = () => {
           return;
         }
 
-        // /support/tickets/:id
         if (pathOnly.match(/^\/support\/tickets\/[A-Za-z0-9-]+$/)) {
           resolve({
             id: 'TK-1002',
             subject: 'EMI Payment Delay Request',
             status: 'open',
             category: 'Repayment',
-            date: 'May 28, 2026',
+            date: past5,
             messages: [
-              { id: 1, sender: 'user', name: 'Pesaru Kireeti', message: 'Hello, due to a delay in my salary disbursement this month, can I pay my June EMI by the 15th instead of the 10th without penalties?', time: 'May 28, 2026, 10:00 AM' },
-              { id: 2, sender: 'support', name: 'Alok (Support Desk)', message: 'Hello Mr. Kireeti, thank you for reaching out. We can grant a grace period up to June 15th. We have updated our records so that auto-debit will not report a bounce, and penalty charges will be waived for this cycle.', time: 'May 29, 2026, 11:30 AM' }
+              { id: 1, sender: 'user', name: 'Pesaru Kireeti', message: 'Hello, due to a delay in my salary disbursement this month, can I pay my next EMI a bit later without penalties?', time: getRelativeDateStr(-5) + ', 10:00 AM' },
+              { id: 2, sender: 'support', name: 'Alok (Support Desk)', message: 'Hello Mr. Kireeti, thank you for reaching out. We can grant a grace period. We have updated our records so that auto-debit will not report a bounce, and penalty charges will be waived for this cycle.', time: getRelativeDateStr(-4) + ', 11:30 AM' }
             ]
           });
           return;
@@ -194,13 +233,12 @@ export const useApi = () => {
           return;
         }
 
-        // /repayments/:repaymentId
         if (pathOnly.match(/^\/repayments\/[A-Za-z0-9-]+$/)) {
           resolve({
             id: 'PM-9012',
             amount: 12450,
             loanId: 'LN-1092',
-            dueDate: '10 June 2026',
+            dueDate: nextMonthLong,
             status: 'pending',
             penalty: 0
           });

@@ -9,10 +9,7 @@ const EmptyLoanState = ({ onApply }) => {
       <p className="text-slate-500 max-w-sm mx-auto mt-2">
         Ready to get started with your first loan? The process is quick and completely paperless.
       </p>
-      <button 
-        onClick={onApply}
-        className="apply-loan-btn mt-6 px-6 py-2.5 bg-blue-600 text-white rounded-xl font-medium shadow-sm hover:bg-blue-700"
-      >
+      <button onClick={onApply} className="apply-loan-btn mt-6 px-6 py-2.5 bg-blue-600 text-white rounded-xl font-medium shadow-sm hover:bg-blue-700">
         Apply for Loan Now →
       </button>
     </div>

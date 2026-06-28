@@ -1,6 +1,7 @@
 // src\pages\loan\ApplyLoan.jsx
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { applyForLoan } from '../../store/thunks/loanThunks';
 import { calculateEMI, calculateEligibility } from '../../utils/calculators';
 import Input from '../../components/common/Input';
@@ -8,6 +9,7 @@ import Button from '../../components/common/Button';
 
 const ApplyLoan = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { user } = useSelector((state) => state.auth);
   const [loanDetails, setLoanDetails] = useState({
     amount: '',
@@ -21,6 +23,22 @@ const ApplyLoan = () => {
     maxAmount: 0,
     message: ''
   });
+  const [showSuccessPopup, setShowSuccessPopup] = useState(false);
+  const [countdown, setCountdown] = useState(10);
+
+  // Dynamically update interest rate based on loan purpose
+  useEffect(() => {
+    const INTEREST_RATES = {
+      personal: 12,
+      home: 8.5,
+      car: 9.5,
+      education: 7.5,
+      business: 15,
+      debt: 13
+    };
+    const rate = INTEREST_RATES[loanDetails.purpose] || 12;
+    setLoanDetails(prev => ({ ...prev, interestRate: rate }));
+  }, [loanDetails.purpose]);
 
   useEffect(() => {
     const emi = calculateEMI(loanDetails.amount, loanDetails.interestRate, loanDetails.tenure);
@@ -32,6 +50,26 @@ const ApplyLoan = () => {
     setEligibility(eligibilityResult);
   }, [loanDetails.amount, user]);
 
+  // Handle countdown redirection timer
+  useEffect(() => {
+    let timer;
+    if (showSuccessPopup) {
+      timer = setInterval(() => {
+        setCountdown((prev) => {
+          if (prev <= 1) {
+            clearInterval(timer);
+            navigate('/');
+            return 0;
+          }
+          return prev - 1;
+        });
+      }, 1000);
+    }
+    return () => {
+      if (timer) clearInterval(timer);
+    };
+  }, [showSuccessPopup, navigate]);
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setLoanDetails({ ...loanDetails, [name]: value });
@@ -42,7 +80,11 @@ const ApplyLoan = () => {
       alert('You are not eligible for this loan amount');
       return;
     }
-    await dispatch(applyForLoan(loanDetails));
+    const result = await dispatch(applyForLoan(loanDetails));
+    if (result && result.success) {
+      setShowSuccessPopup(true);
+      setCountdown(10);
+    }
   };
 
   const getEligibilityColor = () => {
@@ -124,15 +166,39 @@ const ApplyLoan = () => {
                   step="6"
                   value={loanDetails.tenure}
                   onChange={handleInputChange}
-                  className="w-full"
+                  className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-blue-600 focus:outline-none"
                 />
-                <div className="flex justify-between text-sm text-gray-600 mt-1">
-                  <span>6</span>
-                  <span>12</span>
-                  <span>24</span>
-                  <span>36</span>
-                  <span>48</span>
-                  <span>60</span>
+                <div className="relative w-full h-6 mt-1.5">
+                  {[
+                    { value: 6, percent: 0, align: 'left' },
+                    { value: 12, percent: 11.11, align: 'center' },
+                    { value: 24, percent: 33.33, align: 'center' },
+                    { value: 36, percent: 55.56, align: 'center' },
+                    { value: 48, percent: 77.78, align: 'center' },
+                    { value: 60, percent: 100, align: 'right' }
+                  ].map((tick) => {
+                    let style = { position: 'absolute' };
+                    if (tick.align === 'left') {
+                      style.left = '0%';
+                    } else if (tick.align === 'right') {
+                      style.right = '0%';
+                    } else {
+                      style.left = `${tick.percent}%`;
+                      style.transform = 'translateX(-50%)';
+                    }
+                    const isActive = parseInt(loanDetails.tenure) === tick.value;
+                    return (
+                      <span
+                        key={tick.value}
+                        className={`text-xs transition-colors duration-200 ${
+                          isActive ? 'text-blue-600 font-bold scale-110' : 'text-gray-500'
+                        }`}
+                        style={style}
+                      >
+                        {tick.value}
+                      </span>
+                    );
+                  })}
                 </div>
                 <p className="text-sm text-gray-600 mt-2">
                   Selected: {loanDetails.tenure} months ({Math.floor(loanDetails.tenure / 12)} years {loanDetails.tenure % 12} months)
@@ -197,6 +263,62 @@ const ApplyLoan = () => {
           </div>
         </div>
       </div>
+
+      {/* Success Modal */}
+      {showSuccessPopup && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm transition-opacity duration-300">
+          <div className="bg-white rounded-2xl shadow-2xl p-8 max-w-md w-full relative transform scale-100 transition-all duration-300 border border-gray-100">
+            {/* Close Icon Button */}
+            <button
+              onClick={() => setShowSuccessPopup(false)}
+              className="absolute top-4 right-4 p-1 rounded-full text-gray-400 hover:text-gray-600 hover:bg-gray-100 transition-colors"
+              aria-label="Close"
+            >
+              <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+
+            {/* Success Circle and Icon */}
+            <div className="mx-auto flex items-center justify-center h-20 w-20 rounded-full bg-green-50 text-green-500 mb-6 animate-bounce">
+              <svg className="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+              </svg>
+            </div>
+
+            {/* Content */}
+            <div className="text-center">
+              <h3 className="text-2xl font-bold text-gray-900 mb-2">
+                Application Submitted Successfully!
+              </h3>
+              <p className="text-gray-500 text-sm mb-6">
+                Thank you for your application.
+              </p>
+              <div className="bg-blue-50/50 border border-blue-100/50 rounded-xl py-3 px-4 mb-6">
+                <p className="text-sm text-blue-700 font-medium font-sans">
+                  Redirecting to Home page in <span className="font-bold text-lg text-blue-800">{countdown}</span> seconds...
+                </p>
+              </div>
+              
+              {/* Manual Actions */}
+              <div className="flex flex-col gap-2">
+                <Button
+                  onClick={() => navigate('/')}
+                  className="w-full py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl font-medium transition-colors"
+                >
+                  Go to Home Now
+                </Button>
+                <button
+                  onClick={() => setShowSuccessPopup(false)}
+                  className="w-full py-2 text-sm text-gray-500 hover:text-gray-700 font-medium transition-colors"
+                >
+                  Dismiss
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
