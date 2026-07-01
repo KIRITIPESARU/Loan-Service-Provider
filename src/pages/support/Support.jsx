@@ -21,9 +21,11 @@ const Support = () => {
     try {
       await post('/support/tickets', ticket);
       setSubmitted(true);
-    } catch (error) {
+    }
+    catch (error) {
       console.error('Failed to submit ticket:', error);
-    } finally {
+    }
+    finally {
       setLoading(false);
     }
   };
@@ -57,13 +59,9 @@ const Support = () => {
             </svg>
           </div>
           <h3 className="text-2xl font-bold text-gray-800 mb-2">Ticket Created Successfully</h3>
-          <p className="text-gray-600 mb-6">
-            Our support team will respond to your query within 24 hours.
-          </p>
-          <button
-            onClick={() => setSubmitted(false)}
-            className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
-          >
+          <p className="text-gray-600 mb-6">Our support team will respond to your query within 24 hours.</p>
+          <button className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+            onClick={() => setSubmitted(false)}>
             Create Another Ticket
           </button>
         </div>
@@ -79,35 +77,20 @@ const Support = () => {
           <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
             <div className="bg-gradient-to-r from-blue-600 to-indigo-600 px-8 py-6">
               <h2 className="text-2xl font-bold text-white">Contact Support</h2>
-              <p className="text-blue-100 mt-1">
-                We're here to help. Fill out the form below.
-              </p>
+              <p className="text-blue-100 mt-1">We're here to help. Fill out the form below.</p>
             </div>
-
             <form onSubmit={handleSubmit} className="p-8 space-y-6">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Subject
-                </label>
-                <input
-                  type="text"
-                  value={ticket.subject}
-                  onChange={(e) => setTicket({ ...ticket, subject: e.target.value })}
-                  placeholder="Brief description of your issue"
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
-                  required
+                <label className="block text-sm font-medium text-gray-700 mb-2">Subject</label>
+                <input className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                  type="text" value={ticket.subject} onChange={(e) => setTicket({ ...ticket, subject: e.target.value })}
+                  placeholder="Brief description of your issue" required
                 />
               </div>
-
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Category
-                </label>
-                <select
-                  value={ticket.category}
-                  onChange={(e) => setTicket({ ...ticket, category: e.target.value })}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
-                >
+                <label className="block text-sm font-medium text-gray-700 mb-2">Category</label>
+                <select className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                  value={ticket.category} onChange={(e) => setTicket({ ...ticket, category: e.target.value })}>
                   <option value="technical">Technical Issue</option>
                   <option value="loan">Loan Related</option>
                   <option value="payment">Payment Issue</option>
@@ -115,40 +98,24 @@ const Support = () => {
                   <option value="other">Other</option>
                 </select>
               </div>
-
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Priority
-                </label>
-                <select
-                  value={ticket.priority}
-                  onChange={(e) => setTicket({ ...ticket, priority: e.target.value })}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
-                >
+                <label className="block text-sm font-medium text-gray-700 mb-2">Priority</label>
+                <select className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                  value={ticket.priority} onChange={(e) => setTicket({ ...ticket, priority: e.target.value })}>
                   <option value="low">Low</option>
                   <option value="medium">Medium</option>
                   <option value="high">High</option>
                   <option value="urgent">Urgent</option>
                 </select>
               </div>
-
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Message
-                </label>
-                <textarea
-                  rows={6}
-                  value={ticket.message}
-                  onChange={(e) => setTicket({ ...ticket, message: e.target.value })}
-                  placeholder="Please provide detailed information about your issue..."
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
-                  required
+                <label className="block text-sm font-medium text-gray-700 mb-2">Message</label>
+                <textarea className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                  rows={6} value={ticket.message} onChange={(e) => setTicket({ ...ticket, message: e.target.value })}
+                  placeholder="Please provide detailed information about your issue..." required
                 />
               </div>
-
-              <Button type="submit" loading={loading} className="w-full">
-                Submit Ticket
-              </Button>
+              <Button type="submit" loading={loading} className="w-full">Submit Ticket</Button>
             </form>
           </div>
         </div>
@@ -171,7 +138,6 @@ const Support = () => {
               ))}
             </div>
           </div>
-
           <div className="bg-gradient-to-r from-blue-500 to-indigo-500 rounded-2xl shadow-xl p-6 text-white text-center">
             <svg className="w-12 h-12 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />

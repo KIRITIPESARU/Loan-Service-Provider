@@ -5,12 +5,10 @@ import { loginStart, loginSuccess, loginFailure, logout as authLogout } from '..
 export const useAuth = () => {
   const dispatch = useDispatch();
   const { user, isAuthenticated, loading, error } = useSelector((state) => state.auth);
-
   const login = async (credentials) => {
     dispatch(loginStart());
     return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        // Simple success mock
+      setTimeout(() => {        // Simple success mock
         if (credentials.email && credentials.password) {
           const mockUser = {
             email: credentials.email,
@@ -19,7 +17,8 @@ export const useAuth = () => {
           };
           dispatch(loginSuccess(mockUser));
           resolve(mockUser);
-        } else {
+        }
+        else {
           dispatch(loginFailure('Invalid credentials'));
           reject(new Error('Invalid credentials'));
         }
@@ -35,17 +34,6 @@ export const useAuth = () => {
     });
   };
 
-  const logout = async () => {
-    dispatch(authLogout());
-  };
-
-  return {
-    user,
-    isAuthenticated,
-    loading,
-    error,
-    login,
-    register,
-    logout
-  };
+  const logout = async () => { dispatch(authLogout()); };
+  return { user, isAuthenticated, loading, error, login, register, logout };
 };

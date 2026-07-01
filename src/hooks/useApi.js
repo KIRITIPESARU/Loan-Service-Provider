@@ -3,7 +3,6 @@ import { useState } from 'react';
 
 export const useApi = () => {
   const [loading, setLoading] = useState(false);
-
   // Date generators
   const getRelativeDateStr = (daysOffset, format = 'short') => {
     const d = new Date();
@@ -13,14 +12,12 @@ export const useApi = () => {
     }
     return d.toLocaleDateString('en-US', { month: 'short', day: '2-digit', year: 'numeric' }); // e.g., May 10, 2026
   };
-
   const todayStr = getRelativeDateStr(0);
   const yesterdayStr = getRelativeDateStr(-1);
   const nextMonthLong = getRelativeDateStr(30, 'long');
   const past5 = getRelativeDateStr(-5);
   const past30 = getRelativeDateStr(-30);
   const past60 = getRelativeDateStr(-60);
-
   // Deep mocked data store
   const mockData = {
     '/user/dashboard/stats': {
@@ -40,32 +37,8 @@ export const useApi = () => {
       totalPrincipal: 450000,
       totalEMI: 18500,
       loans: [
-        { 
-          id: 'LN-1092', 
-          name: 'Home Renovation Loan',
-          amount: 300000, 
-          remainingAmount: 250000,
-          tenure: 24, 
-          remainingTenure: 20,
-          emi: 12450, 
-          status: 'Active', 
-          lender: 'SBI', 
-          nextDue: nextMonthLong,
-          progress: 30
-        },
-        { 
-          id: 'LN-8832', 
-          name: 'Education Loan',
-          amount: 150000, 
-          remainingAmount: 140000,
-          tenure: 30, 
-          remainingTenure: 28,
-          emi: 6050, 
-          status: 'Active', 
-          lender: 'HDFC', 
-          nextDue: nextMonthLong,
-          progress: 10
-        }
+        { id: 'LN-1092', name: 'Home Renovation Loan', amount: 300000, remainingAmount: 250000, tenure: 24, remainingTenure: 20, emi: 12450, status: 'Active', lender: 'SBI', nextDue: nextMonthLong, progress: 30 },
+        { id: 'LN-8832', name: 'Education Loan',amount: 150000, remainingAmount: 140000,tenure: 30, remainingTenure: 28,emi: 6050, status: 'Active', lender: 'HDFC', nextDue: nextMonthLong,progress: 10}
       ]
     },
     '/user/credit-score': {
@@ -105,10 +78,7 @@ export const useApi = () => {
       { id: 'bk-2', bankName: 'HDFC Bank', accountNumber: '•••• 9876 5432', accountType: 'Current', status: 'secondary', isVerified: true }
     ],
     '/user/referral': {
-      code: 'PESARU13',
-      points: 1200,
-      referralsCount: 4,
-      earnings: '₹4,000',
+      code: 'PESARU13', points: 1200, referralsCount: 4, earnings: '₹4,000',
       history: [
         { id: 1, friendName: 'Amit Sharma', status: 'Disbursed', reward: '500 Points + ₹1,000' },
         { id: 2, friendName: 'Pooja Patel', status: 'Approved', reward: '300 Points' },
@@ -120,14 +90,7 @@ export const useApi = () => {
       { id: 'c-2', title: 'Aadhaar e-KYC Data Consent', purpose: 'Allow extraction of demographics data from UIDAI registry.', status: true, date: past30 },
       { id: 'c-3', title: 'Marketing Communications', purpose: 'Send newsletters, promotional schemes, and loan offers.', status: false, date: past30 }
     ],
-    '/admin/stats': {
-      totalUsers: 1450,
-      activeLoans: 310,
-      totalDisbursed: 124500000,
-      pendingApprovals: 12,
-      lendersCount: 15,
-      nbfcPartners: 8
-    },
+    '/admin/stats': { totalUsers: 1450, activeLoans: 310, totalDisbursed: 124500000, pendingApprovals: 12, lendersCount: 15, nbfcPartners: 8 },
     '/admin/users/recent': [
       { id: 1, name: 'Sandeep Kumar', email: 'sandeep@example.com', date: 'Today at 2:30 PM', role: 'user', kycStatus: 'pending' },
       { id: 2, name: 'Neha Gupta', email: 'neha.g@example.com', date: 'Today at 1:15 PM', role: 'user', kycStatus: 'verified' },
@@ -150,18 +113,13 @@ export const useApi = () => {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         setLoading(false);
-
-        // Normalize URL - remove query params
-        const pathOnly = url.split('?')[0];
-
-        // Exact match in mock data
-        if (mockData[pathOnly] !== undefined) {
+        const pathOnly = url.split('?')[0];        // Normalize URL - remove query params
+        if (mockData[pathOnly] !== undefined) {        // Exact match in mock data
           resolve(mockData[pathOnly]);
           return;
         }
 
-        // Regex matches for dynamic routing
-        // /loans/:id/tracking
+        // Regex matches for dynamic routing         /loans/:id/tracking
         if (pathOnly.match(/^\/loans\/[A-Za-z0-9-]+\/tracking$/)) {
           resolve({
             loanId: 'LN-1092',
@@ -177,48 +135,26 @@ export const useApi = () => {
           });
           return;
         }
-
+        
         // /loans/:id/agreement
-        if (pathOnly.match(/^\/loans\/[A-Za-z0-9-]+\/agreement$/)) {
+        if (pathOnly.match(/^\/loans\/[A-Za-z0-9-]+\/agreement$/))
+        {
           resolve({
-            loanId: 'LN-1092',
-            lender: 'State Bank of India',
-            borrowerName: 'Pesaru Kireeti',
-            amount: 300000,
-            rate: 12,
-            emi: 12450,
-            tenure: 24,
+            loanId: 'LN-1092', lender: 'State Bank of India', borrowerName: 'Pesaru Kireeti', amount: 300000, rate: 12, emi: 12450, tenure: 24,
             terms: 'This agreement is executed between the Lender and the Borrower. The Borrower agrees to repay the loan amount of ₹3,00,000 at a fixed interest rate of 12% p.a. in 24 monthly installments. Delay in repayment will attract a penal charge of 2% per month on the overdue EMI. Early repayments are allowed after 6 months without foreclosure charges.'
           });
           return;
         }
 
-        if (pathOnly.match(/^\/loans\/[A-Za-z0-9-]+$/)) {
-          resolve({
-            id: 'LN-1092',
-            amount: 300000,
-            purpose: 'Home Renovation',
-            emi: 12450,
-            tenure: 24,
-            interestRate: 12,
-            status: 'active',
-            lender: 'SBI',
-            disbursalDate: past30,
-            nextEMI: nextMonthLong,
-            paidEMIs: 1,
-            repaidAmount: 12450,
-            remainingPrincipal: 287550
-          });
+        if (pathOnly.match(/^\/loans\/[A-Za-z0-9-]+$/))
+        {
+          resolve({ id: 'LN-1092', amount: 300000, purpose: 'Home Renovation', emi: 12450, tenure: 24, interestRate: 12, status: 'active', lender: 'SBI', disbursalDate: past30, nextEMI: nextMonthLong, paidEMIs: 1, repaidAmount: 12450, remainingPrincipal: 287550 });
           return;
         }
 
-        if (pathOnly.match(/^\/support\/tickets\/[A-Za-z0-9-]+$/)) {
-          resolve({
-            id: 'TK-1002',
-            subject: 'EMI Payment Delay Request',
-            status: 'open',
-            category: 'Repayment',
-            date: past5,
+        if (pathOnly.match(/^\/support\/tickets\/[A-Za-z0-9-]+$/))
+        {
+          resolve({ id: 'TK-1002', subject: 'EMI Payment Delay Request', status: 'open', category: 'Repayment', date: past5,
             messages: [
               { id: 1, sender: 'user', name: 'Pesaru Kireeti', message: 'Hello, due to a delay in my salary disbursement this month, can I pay my next EMI a bit later without penalties?', time: getRelativeDateStr(-5) + ', 10:00 AM' },
               { id: 2, sender: 'support', name: 'Alok (Support Desk)', message: 'Hello Mr. Kireeti, thank you for reaching out. We can grant a grace period. We have updated our records so that auto-debit will not report a bounce, and penalty charges will be waived for this cycle.', time: getRelativeDateStr(-4) + ', 11:30 AM' }
@@ -228,25 +164,21 @@ export const useApi = () => {
         }
 
         // /repayments/:repaymentId/receipt
-        if (pathOnly.match(/^\/repayments\/[A-Za-z0-9-]+\/receipt$/)) {
+        if (pathOnly.match(/^\/repayments\/[A-Za-z0-9-]+\/receipt$/))
+        {
           resolve(new Blob(['Mock PDF Content'], { type: 'application/pdf' }));
           return;
         }
 
-        if (pathOnly.match(/^\/repayments\/[A-Za-z0-9-]+$/)) {
-          resolve({
-            id: 'PM-9012',
-            amount: 12450,
-            loanId: 'LN-1092',
-            dueDate: nextMonthLong,
-            status: 'pending',
-            penalty: 0
-          });
+        if (pathOnly.match(/^\/repayments\/[A-Za-z0-9-]+$/))
+        {
+          resolve({ id: 'PM-9012', amount: 12450, loanId: 'LN-1092', dueDate: nextMonthLong, status: 'pending', penalty: 0 });
           return;
         }
 
         // /admin/reports/:reportType
-        if (pathOnly.match(/^\/admin\/reports\/[a-z]+$/)) {
+        if (pathOnly.match(/^\/admin\/reports\/[a-z]+$/))
+        {
           resolve([
             { label: 'Week 1', value: 45 },
             { label: 'Week 2', value: 65 },
@@ -257,7 +189,8 @@ export const useApi = () => {
         }
 
         // /admin/users
-        if (pathOnly.startsWith('/admin/users')) {
+        if (pathOnly.startsWith('/admin/users'))
+        {
           resolve({
             users: [
               { id: 1, name: 'Sandeep Kumar', email: 'sandeep@example.com', phone: '+91 91111 22222', role: 'user', kycStatus: 'pending' },
@@ -270,7 +203,8 @@ export const useApi = () => {
         }
 
         // /admin/loans
-        if (pathOnly.startsWith('/admin/loans')) {
+        if (pathOnly.startsWith('/admin/loans'))
+        {
           resolve({
             loans: [
               { id: 'LN-9012', user: 'Sandeep Kumar', amount: 200000, purpose: 'Personal', status: 'pending', date: 'May 31, 2026' },
@@ -281,9 +215,7 @@ export const useApi = () => {
           });
           return;
         }
-
-        // Default empty list fallback
-        resolve([]);
+        resolve([]);        // Default empty list fallback
       }, 500);
     });
   };
@@ -292,12 +224,5 @@ export const useApi = () => {
   const post = async (url, data, config) => resolveRequest('POST', url, data);
   const put = async (url, data, config) => resolveRequest('PUT', url, data);
   const del = async (url, config) => resolveRequest('DELETE', url, null);
-
-  return {
-    loading,
-    get,
-    post,
-    put,
-    delete: del
-  };
+  return { loading, get, post, put, delete: del };
 };

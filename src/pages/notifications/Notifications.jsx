@@ -25,9 +25,11 @@ const Notifications = () => {
     try {
       const data = await get('/notifications');
       setNotifications(data);
-    } catch (error) {
+    }
+    catch (error) {
       console.error('Failed to fetch notifications:', error);
-    } finally {
+    }
+    finally {
       setLoading(false);
     }
   };
@@ -38,7 +40,8 @@ const Notifications = () => {
       setNotifications(notifications.map(notif =>
         notif.id === id ? { ...notif, read: true } : notif
       ));
-    } catch (error) {
+    }
+    catch (error) {
       console.error('Failed to mark as read:', error);
     }
   };
@@ -47,7 +50,8 @@ const Notifications = () => {
     try {
       await post('/notifications/read-all');
       setNotifications(notifications.map(notif => ({ ...notif, read: true })));
-    } catch (error) {
+    }
+    catch (error) {
       console.error('Failed to mark all as read:', error);
     }
   };
@@ -56,7 +60,8 @@ const Notifications = () => {
     try {
       await post(`/notifications/${id}/delete`);
       setNotifications(notifications.filter(notif => notif.id !== id));
-    } catch (error) {
+    }
+    catch (error) {
       console.error('Failed to delete notification:', error);
     }
   };
@@ -114,17 +119,10 @@ const Notifications = () => {
           <div className="flex justify-between items-center">
             <div>
               <h2 className="text-2xl font-bold text-white">Notifications</h2>
-              <p className="text-blue-100 mt-1">
-                You have {unreadCount} unread notification{unreadCount !== 1 ? 's' : ''}
-              </p>
+              <p className="text-blue-100 mt-1">You have {unreadCount} unread notification{unreadCount !== 1 ? 's' : ''}</p>
             </div>
             {unreadCount > 0 && (
-              <button
-                onClick={markAllAsRead}
-                className="px-4 py-2 bg-white text-blue-600 rounded-lg font-medium hover:bg-blue-50"
-              >
-                Mark all as read
-              </button>
+              <button onClick={markAllAsRead} className="px-4 py-2 bg-white text-blue-600 rounded-lg font-medium hover:bg-blue-50">Mark all as read</button>
             )}
           </div>
         </div>
@@ -133,15 +131,12 @@ const Notifications = () => {
         <div className="border-b border-gray-200 px-8">
           <div className="flex gap-6">
             {['all', 'unread', 'read'].map((tab) => (
-              <button
-                key={tab}
-                onClick={() => setFilter(tab)}
+              <button key={tab} onClick={() => setFilter(tab)}
                 className={`py-3 px-1 border-b-2 font-medium text-sm capitalize ${
                   filter === tab
                     ? 'border-blue-500 text-blue-600'
                     : 'border-transparent text-gray-500 hover:text-gray-700'
-                }`}
-              >
+                }`}>
                 {tab}
               </button>
             ))}
@@ -157,10 +152,8 @@ const Notifications = () => {
             </div>
           ) : (
             filteredNotifications.map((notification) => (
-              <div
-                key={notification.id}
-                className={`p-6 hover:bg-gray-50 transition ${!notification.read ? 'bg-blue-50' : ''}`}
-              >
+              <div key={notification.id}
+                className={`p-6 hover:bg-gray-50 transition ${!notification.read ? 'bg-blue-50' : ''}`}>
                 <div className="flex items-start gap-4">
                   <div className={`text-2xl bg-${getNotificationColor(notification.type)}-100 p-2 rounded-full`}>
                     {getNotificationIcon(notification.type)}
@@ -170,34 +163,17 @@ const Notifications = () => {
                       <div>
                         <h4 className="font-semibold text-gray-800">{notification.title}</h4>
                         <p className="text-gray-600 mt-1">{notification.message}</p>
-                        <p className="text-xs text-gray-400 mt-2">
-                          {new Date(notification.createdAt).toLocaleString()}
-                        </p>
+                        <p className="text-xs text-gray-400 mt-2">{new Date(notification.createdAt).toLocaleString()}</p>
                       </div>
                       <div className="flex gap-2">
                         {!notification.read && (
-                          <button
-                            onClick={() => markAsRead(notification.id)}
-                            className="text-xs text-blue-600 hover:text-blue-700"
-                          >
-                            Mark as read
-                          </button>
+                          <button onClick={() => markAsRead(notification.id)} className="text-xs text-blue-600 hover:text-blue-700">Mark as read</button>
                         )}
-                        <button
-                          onClick={() => deleteNotification(notification.id)}
-                          className="text-xs text-red-600 hover:text-red-700"
-                        >
-                          Delete
-                        </button>
+                        <button onClick={() => deleteNotification(notification.id)} className="text-xs text-red-600 hover:text-red-700">Delete</button>
                       </div>
                     </div>
                     {notification.actionUrl && (
-                      <button
-                        onClick={() => window.location.href = notification.actionUrl}
-                        className="mt-3 text-sm text-blue-600 hover:text-blue-700"
-                      >
-                        View Details →
-                      </button>
+                      <button onClick={() => window.location.href = notification.actionUrl} className="mt-3 text-sm text-blue-600 hover:text-blue-700">View Details →</button>
                     )}
                   </div>
                 </div>

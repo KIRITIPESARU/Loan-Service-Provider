@@ -22,9 +22,11 @@ const AdminLoans = () => {
       const data = await get(`/admin/loans?page=${currentPage}&status=${filter}`);
       setLoans(data.loans);
       setTotalPages(data.totalPages);
-    } catch (error) {
+    }
+    catch (error) {
       console.error('Failed to fetch loans:', error);
-    } finally {
+    }
+    finally {
       setLoading(false);
     }
   };
@@ -33,7 +35,8 @@ const AdminLoans = () => {
     try {
       await post(`/admin/loans/${loanId}/status`, { status });
       fetchLoans();
-    } catch (error) {
+    }
+    catch (error) {
       console.error('Failed to update loan status:', error);
     }
   };
@@ -62,15 +65,11 @@ const AdminLoans = () => {
             </div>
             <div className="flex gap-2">
               {['all', 'pending', 'approved', 'rejected', 'disbursed', 'active'].map((status) => (
-                <button
-                  key={status}
-                  onClick={() => setFilter(status)}
-                  className={`px-4 py-2 rounded-lg text-sm font-medium capitalize ${
-                    filter === status
-                      ? 'bg-white text-blue-600'
-                      : 'bg-blue-700 text-white hover:bg-blue-600'
-                  }`}
-                >
+                <button key={status} onClick={() => setFilter(status)}
+                  className={`px-4 py-2 rounded-lg text-sm font-medium capitalize ${filter === status
+                    ? 'bg-white text-blue-600'
+                    : 'bg-blue-700 text-white hover:bg-blue-600'
+                    }`}>  
                   {status}
                 </button>
               ))}
@@ -121,15 +120,10 @@ const AdminLoans = () => {
                         {loan.status.toUpperCase()}
                       </span>
                     </td>
-                    <td className="px-6 py-4 text-sm text-gray-500">
-                      {new Date(loan.createdAt).toLocaleDateString()}
-                    </td>
+                    <td className="px-6 py-4 text-sm text-gray-500">{new Date(loan.createdAt).toLocaleDateString()}</td>
                     <td className="px-6 py-4">
-                      <select
-                        value={loan.status}
-                        onChange={(e) => handleStatusUpdate(loan.id, e.target.value)}
-                        className="text-sm border rounded px-2 py-1"
-                      >
+                      <select value={loan.status} onChange={(e) => handleStatusUpdate(loan.id, e.target.value)}
+                        className="text-sm border rounded px-2 py-1">
                         <option value="pending">Pending</option>
                         <option value="approved">Approve</option>
                         <option value="rejected">Reject</option>
