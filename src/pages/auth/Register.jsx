@@ -18,7 +18,6 @@ const Register = () => {
   const [loading, setLoading] = useState(false);
   const { register } = useAuth();
   const navigate = useNavigate();
-
   const validateForm = () => {
     const newErrors = {};
     if (!formData.fullName) newErrors.fullName = 'Full name is required';
@@ -39,14 +38,15 @@ const Register = () => {
       setErrors(newErrors);
       return;
     }
-
     setLoading(true);
     try {
       await register(formData);
       navigate('/verify-otp', { state: { email: formData.email } });
-    } catch (error) {
+    }
+    catch (error) {
       console.error('Registration failed:', error);
-    } finally {
+    }
+    finally {
       setLoading(false);
     }
   };
@@ -60,87 +60,53 @@ const Register = () => {
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-4">
-          <Input
-            label="Full Name"
-            value={formData.fullName}
+          <Input label="Full Name" value={formData.fullName}
             onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
-            error={errors.fullName}
-            placeholder="John Doe"
-            required
+            error={errors.fullName} placeholder="John Doe" required
           />
 
-          <Input
-            label="Email Address"
-            type="email"
-            value={formData.email}
+          <Input label="Email Address" type="email" value={formData.email}
             onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-            error={errors.email}
-            placeholder="john@example.com"
-            required
+            error={errors.email} placeholder="john@example.com" required
           />
 
-          <Input
-            label="Phone Number"
-            type="tel"
-            value={formData.phone}
+          <Input label="Phone Number" type="tel" value={formData.phone}
             onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-            error={errors.phone}
-            placeholder="+91 98765 43210"
-            required
+            error={errors.phone} placeholder="+91 98765 43210" required
           />
 
-          <Input
-            label="Password"
-            type="password"
-            value={formData.password}
+          <Input label="Password" type="password" value={formData.password}
             onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-            error={errors.password}
-            placeholder="Create a strong password"
-            required
+            error={errors.password} placeholder="Create a strong password" required
           />
 
-          <Input
-            label="Confirm Password"
-            type="password"
-            value={formData.confirmPassword}
+          <Input label="Confirm Password" type="password" value={formData.confirmPassword}
             onChange={(e) => setFormData({ ...formData, confirmPassword: e.target.value })}
-            error={errors.confirmPassword}
-            placeholder="Confirm your password"
-            required
+            error={errors.confirmPassword} placeholder="Confirm your password" required
           />
 
           <label className="flex items-center">
-            <input
-              type="checkbox"
-              checked={formData.agreeToTerms}
+            <input type="checkbox" checked={formData.agreeToTerms}
               onChange={(e) => setFormData({ ...formData, agreeToTerms: e.target.checked })}
               className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
             />
+
             <span className="ml-2 text-sm text-gray-600">
-              I agree to the{' '}
-              <Link to="/terms" className="text-blue-600 hover:text-blue-700">
-                Terms of Service
-              </Link>{' '}
-              and{' '}
-              <Link to="/privacy" className="text-blue-600 hover:text-blue-700">
-                Privacy Policy
-              </Link>
+              I agree to the
+              <Link to="/terms" className="text-blue-600 hover:text-blue-700">Terms of Service</Link>
+              and
+              <Link to="/privacy" className="text-blue-600 hover:text-blue-700">Privacy Policy</Link>
             </span>
           </label>
           {errors.agreeToTerms && (
             <p className="text-red-500 text-sm">{errors.agreeToTerms}</p>
           )}
-
-          <Button type="submit" loading={loading} className="w-full">
-            Create Account
-          </Button>
+          <Button type="submit" loading={loading} className="w-full">Create Account</Button>
         </form>
 
         <p className="text-center text-gray-600 mt-6">
           Already have an account?{' '}
-          <Link to="/login" className="text-blue-600 hover:text-blue-700 font-medium">
-            Sign in
-          </Link>
+          <Link to="/login" className="text-blue-600 hover:text-blue-700 font-medium">Sign in</Link>
         </p>
       </div>
     </div>

@@ -21,11 +21,9 @@ const RepaymentHistory = () => {
       const data = await get(`/user/repayments?page=${currentPage}&status=${filter}`);
       setRepayments(data.repayments);
       setTotalPages(data.totalPages);
-    } catch (error) {
-      console.error('Failed to fetch repayments:', error);
-    } finally {
-      setLoading(false);
     }
+    catch (error) { console.error('Failed to fetch repayments:', error); }
+    finally { setLoading(false); }
   };
 
   const getStatusBadge = (status) => {
@@ -46,9 +44,8 @@ const RepaymentHistory = () => {
       a.href = url;
       a.download = `receipt_${repaymentId}.pdf`;
       a.click();
-    } catch (error) {
-      console.error('Failed to download receipt:', error);
     }
+    catch (error) { console.error('Failed to download receipt:', error); }
   };
 
   return (
@@ -62,15 +59,12 @@ const RepaymentHistory = () => {
             </div>
             <div className="flex gap-2">
               {['all', 'paid', 'pending', 'overdue'].map((status) => (
-                <button
-                  key={status}
-                  onClick={() => setFilter(status)}
+                <button key={status} onClick={() => setFilter(status)}
                   className={`px-4 py-2 rounded-lg text-sm font-medium capitalize ${
                     filter === status
                       ? 'bg-white text-blue-600'
                       : 'bg-blue-700 text-white hover:bg-blue-600'
-                  }`}
-                >
+                  }`}>
                   {status}
                 </button>
               ))}
@@ -115,9 +109,7 @@ const RepaymentHistory = () => {
                     <td className="px-6 py-4 text-sm font-semibold text-gray-900">
                       ₹{repayment.amount.toLocaleString()}
                     </td>
-                    <td className="px-6 py-4 text-sm text-gray-600">
-                      {new Date(repayment.dueDate).toLocaleDateString()}
-                    </td>
+                    <td className="px-6 py-4 text-sm text-gray-600">{new Date(repayment.dueDate).toLocaleDateString()}</td>
                     <td className="px-6 py-4 text-sm text-gray-600">
                       {repayment.paidOn ? new Date(repayment.paidOn).toLocaleDateString() : '-'}
                     </td>
@@ -128,18 +120,14 @@ const RepaymentHistory = () => {
                     </td>
                     <td className="px-6 py-4">
                       {repayment.status === 'paid' && (
-                        <button
-                          onClick={() => downloadReceipt(repayment.id)}
-                          className="text-blue-600 hover:text-blue-800 text-sm"
-                        >
+                        <button className="text-blue-600 hover:text-blue-800 text-sm"
+                          onClick={() => downloadReceipt(repayment.id)}>
                           Receipt
                         </button>
                       )}
                       {repayment.status === 'pending' && (
-                        <button
-                          onClick={() => window.location.href = `/repayments/${repayment.id}/pay`}
-                          className="text-green-600 hover:text-green-800 text-sm font-medium"
-                        >
+                        <button className="text-green-600 hover:text-green-800 text-sm font-medium"
+                          onClick={() => window.location.href = `/repayments/${repayment.id}/pay`}>
                           Pay Now
                         </button>
                       )}
