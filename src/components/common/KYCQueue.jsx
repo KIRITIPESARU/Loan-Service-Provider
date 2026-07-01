@@ -17,8 +17,11 @@ const KYCQueue = () => {
     <div className="space-y-4">
       <div className="flex justify-between items-center mb-4">
         <h3 className="text-lg font-bold text-gray-800">Pending KYC Review Queue</h3>
-        <span className="bg-orange-100 text-orange-800 text-xs font-semibold px-2.5 py-0.5 rounded-full">{queue.length} Tasks Pending</span>
+        <span className="bg-orange-100 text-orange-800 text-xs font-semibold px-2.5 py-0.5 rounded-full">
+          {queue.length} Tasks Pending
+        </span>
       </div>
+
       <div className="overflow-x-auto">
         <table className="min-w-full divide-y divide-gray-200">
           <thead className="bg-gray-50">
@@ -54,10 +57,16 @@ const KYCQueue = () => {
                   </td>
                   <td className="px-6 py-4 text-sm text-gray-500">{item.date}</td>
                   <td className="px-6 py-4 space-x-2">
-                    <button onClick={() => handleAction(item.id, 'Approved')} className="text-green-600 hover:text-green-800 font-semibold text-sm">
+                    <button
+                      onClick={() => handleAction(item.id, 'Approved')}
+                      className="text-green-600 hover:text-green-800 font-semibold text-sm"
+                    >
                       Approve
                     </button>
-                    <button onClick={() => handleAction(item.id, 'Rejected')} className="text-red-600 hover:text-red-800 font-semibold text-sm">
+                    <button
+                      onClick={() => handleAction(item.id, 'Rejected')}
+                      className="text-red-600 hover:text-red-800 font-semibold text-sm"
+                    >
                       Reject
                     </button>
                   </td>

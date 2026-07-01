@@ -44,9 +44,11 @@ const SecuritySettings = () => {
       });
       setMessage('Password changed successfully!');
       setPasswordData({ currentPassword: '', newPassword: '', confirmPassword: '' });
+    } catch (error) {
+      setMessage(error.response?.data?.message || 'Failed to change password');
+    } finally {
+      setLoading(false);
     }
-    catch (error) {setMessage(error.response?.data?.message || 'Failed to change password');}
-    finally {setLoading(false);}
   };
 
   const enableTwoFA = async () => {
@@ -55,9 +57,11 @@ const SecuritySettings = () => {
       await post('/user/enable-2fa', { phone: twoFA.phone });
       setTwoFA({ ...twoFA, verified: true, enabled: true });
       setMessage('Two-factor authentication enabled successfully!');
+    } catch (error) {
+      setMessage(error.response?.data?.message || 'Failed to enable 2FA');
+    } finally {
+      setLoading(false);
     }
-    catch (error) {setMessage(error.response?.data?.message || 'Failed to enable 2FA');}
-    finally {setLoading(false);}
   };
 
   const revokeSession = (index) => {
@@ -77,15 +81,24 @@ const SecuritySettings = () => {
               {message}
             </div>
           )}
-          <Input type="password" label="Current Password" value={passwordData.currentPassword}
+          <Input
+            type="password"
+            label="Current Password"
+            value={passwordData.currentPassword}
             onChange={(e) => setPasswordData({ ...passwordData, currentPassword: e.target.value })}
             required
           />
-          <Input type="password" label="New Password" value={passwordData.newPassword}
+          <Input
+            type="password"
+            label="New Password"
+            value={passwordData.newPassword}
             onChange={(e) => setPasswordData({ ...passwordData, newPassword: e.target.value })}
             required
           />
-          <Input type="password" label="Confirm New Password" value={passwordData.confirmPassword}
+          <Input
+            type="password"
+            label="Confirm New Password"
+            value={passwordData.confirmPassword}
             onChange={(e) => setPasswordData({ ...passwordData, confirmPassword: e.target.value })}
             required
           />
@@ -98,8 +111,16 @@ const SecuritySettings = () => {
         <h3 className="text-lg font-semibold text-gray-800 mb-4">Two-Factor Authentication</h3>
         {!twoFA.enabled ? (
           <div className="space-y-4 max-w-md">
-            <p className="text-sm text-gray-600">Add an extra layer of security to your account by enabling two-factor authentication.</p>
-            <Input type="tel" label="Phone Number" value={twoFA.phone} onChange={(e) => setTwoFA({ ...twoFA, phone: e.target.value })} placeholder="+91 98765 43210"/>
+            <p className="text-sm text-gray-600">
+              Add an extra layer of security to your account by enabling two-factor authentication.
+            </p>
+            <Input
+              type="tel"
+              label="Phone Number"
+              value={twoFA.phone}
+              onChange={(e) => setTwoFA({ ...twoFA, phone: e.target.value })}
+              placeholder="+91 98765 43210"
+            />
             <Button onClick={enableTwoFA} loading={loading}>Enable 2FA</Button>
           </div>
         ) : (
@@ -135,7 +156,10 @@ const SecuritySettings = () => {
                 </div>
               </div>
               {!session.current && (
-                <button className="text-sm text-red-600 hover:text-red-700" onClick={() => revokeSession(index)}>
+                <button
+                  onClick={() => revokeSession(index)}
+                  className="text-sm text-red-600 hover:text-red-700"
+                >
                   Revoke
                 </button>
               )}

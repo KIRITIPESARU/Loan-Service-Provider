@@ -10,17 +10,16 @@ const ForgotPassword = () => {
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
   const { forgotPassword } = useAuth();
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     try {
       await forgotPassword(email);
       setSubmitted(true);
-    }
-    catch (error) {
+    } catch (error) {
       console.error('Failed to send reset email:', error);
-    }
-    finally {
+    } finally {
       setLoading(false);
     }
   };
@@ -35,8 +34,12 @@ const ForgotPassword = () => {
             </svg>
           </div>
           <h3 className="text-2xl font-bold text-gray-800 mb-2">Check Your Email</h3>
-          <p className="text-gray-600 mb-4">We've sent password reset instructions to <strong>{email}</strong></p>
-          <Link to="/login" className="text-blue-600 hover:text-blue-700 font-medium">Back to Login</Link>
+          <p className="text-gray-600 mb-4">
+            We've sent password reset instructions to <strong>{email}</strong>
+          </p>
+          <Link to="/login" className="text-blue-600 hover:text-blue-700 font-medium">
+            Back to Login
+          </Link>
         </div>
       </div>
     );
@@ -47,14 +50,32 @@ const ForgotPassword = () => {
       <div className="max-w-md w-full bg-white rounded-2xl shadow-xl p-8">
         <div className="text-center mb-8">
           <h2 className="text-3xl font-bold text-gray-800">Forgot Password?</h2>
-          <p className="text-gray-600 mt-2">Enter your email to reset your password</p>
+          <p className="text-gray-600 mt-2">
+            Enter your email to reset your password
+          </p>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-6">
-          <Input label="Email Address" type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="john@example.com" required />
-          <Button type="submit" loading={loading} className="w-full">Send Reset Instructions</Button>
+          <Input
+            label="Email Address"
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="john@example.com"
+            required
+          />
+
+          <Button type="submit" loading={loading} className="w-full">
+            Send Reset Instructions
+          </Button>
         </form>
-        <p className="text-center text-gray-600 mt-6">Remember your password? <Link to="/login" className="text-blue-600 hover:text-blue-700 font-medium">Back to Login</Link></p>
+
+        <p className="text-center text-gray-600 mt-6">
+          Remember your password?{' '}
+          <Link to="/login" className="text-blue-600 hover:text-blue-700 font-medium">
+            Back to Login
+          </Link>
+        </p>
       </div>
     </div>
   );

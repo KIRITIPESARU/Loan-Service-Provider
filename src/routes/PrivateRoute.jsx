@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux';
 
 const PrivateRoute = () => {
   const { isAuthenticated, loading } = useSelector((state) => state.auth);
+
   if (loading) {
     return (
       <div className="flex justify-center items-center h-screen">
@@ -12,6 +13,7 @@ const PrivateRoute = () => {
       </div>
     );
   }
+
   return isAuthenticated ? <Outlet /> : <Navigate to="/login" />;
 };
 

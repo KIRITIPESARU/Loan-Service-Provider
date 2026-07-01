@@ -23,11 +23,9 @@ const LoanTracker = () => {
       ]);
       setLoan(loanData);
       setTimeline(timelineData);
-    }
-    catch (error) {
+    } catch (error) {
       console.error('Failed to fetch tracking data:', error);
-    }
-    finally {
+    } finally {
       setLoading(false);
     }
   };
@@ -73,7 +71,9 @@ const LoanTracker = () => {
       <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
         <div className="bg-gradient-to-r from-blue-600 to-indigo-600 px-8 py-6">
           <h2 className="text-2xl font-bold text-white">Loan Tracking</h2>
-          <p className="text-blue-100 mt-1">Track your loan application status in real-time</p>
+          <p className="text-blue-100 mt-1">
+            Track your loan application status in real-time
+          </p>
         </div>
 
         <div className="p-8">
@@ -111,7 +111,9 @@ const LoanTracker = () => {
                 </svg>
                 <div>
                   <p className="text-sm font-medium text-yellow-800">Document Verification in Progress</p>
-                  <p className="text-xs text-yellow-700 mt-1">Our team is reviewing your documents. This usually takes 24-48 hours.</p>
+                  <p className="text-xs text-yellow-700 mt-1">
+                    Our team is reviewing your documents. This usually takes 24-48 hours.
+                  </p>
                 </div>
               </div>
             </div>
@@ -125,7 +127,9 @@ const LoanTracker = () => {
                 </svg>
                 <div>
                   <p className="text-sm font-medium text-green-800">Loan Approved!</p>
-                  <p className="text-xs text-green-700 mt-1">Your loan has been approved. Funds will be disbursed within 24 hours.</p>
+                  <p className="text-xs text-green-700 mt-1">
+                    Your loan has been approved. Funds will be disbursed within 24 hours.
+                  </p>
                 </div>
               </div>
             </div>

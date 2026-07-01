@@ -7,6 +7,7 @@ import Footer from './Footer';
 
 const MainLayout = () => {
   const [sidebarOpen, setSidebarOpen] = React.useState(true);
+
   return (
     <div className="flex h-screen bg-gray-50">
       <Sidebar isOpen={sidebarOpen} setIsOpen={setSidebarOpen} />

@@ -10,6 +10,7 @@ const PaymentGateway = ({ amount, onPayment, loading }) => {
     cvv: '',
     name: ''
   });
+
   const handleSubmit = (e) => {
     e.preventDefault();
     onPayment({ method: paymentMethod, details: cardDetails });
@@ -18,24 +19,33 @@ const PaymentGateway = ({ amount, onPayment, loading }) => {
   return (
     <div className="space-y-6">
       <div className="flex gap-4">
-        <button type="button" onClick={() => setPaymentMethod('card')}
+        <button
+          type="button"
+          onClick={() => setPaymentMethod('card')}
           className={`flex-1 p-4 border-2 rounded-lg text-center ${
             paymentMethod === 'card' ? 'border-blue-500 bg-blue-50' : 'border-gray-200'
-          }`}>
+          }`}
+        >
           <div className="text-2xl mb-1">💳</div>
           <div className="text-sm font-medium">Credit/Debit Card</div>
         </button>
-        <button type="button" onClick={() => setPaymentMethod('upi')}
+        <button
+          type="button"
+          onClick={() => setPaymentMethod('upi')}
           className={`flex-1 p-4 border-2 rounded-lg text-center ${
             paymentMethod === 'upi' ? 'border-blue-500 bg-blue-50' : 'border-gray-200'
-          }`}>
+          }`}
+        >
           <div className="text-2xl mb-1">📱</div>
           <div className="text-sm font-medium">UPI</div>
         </button>
-        <button type="button" onClick={() => setPaymentMethod('netbanking')}
+        <button
+          type="button"
+          onClick={() => setPaymentMethod('netbanking')}
           className={`flex-1 p-4 border-2 rounded-lg text-center ${
             paymentMethod === 'netbanking' ? 'border-blue-500 bg-blue-50' : 'border-gray-200'
-          }`}>
+          }`}
+        >
           <div className="text-2xl mb-1">🏦</div>
           <div className="text-sm font-medium">Net Banking</div>
         </button>
@@ -46,32 +56,48 @@ const PaymentGateway = ({ amount, onPayment, loading }) => {
           <>
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">Card Number</label>
-              <input type="text" placeholder="1234 5678 9012 3456" value={cardDetails.number}
+              <input
+                type="text"
+                placeholder="1234 5678 9012 3456"
+                value={cardDetails.number}
                 onChange={(e) => setCardDetails({ ...cardDetails, number: e.target.value })}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg" required
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg"
+                required
               />
             </div>
             <div className="grid grid-cols-2 gap-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Expiry Date</label>
-                <input type="text" placeholder="MM/YY" value={cardDetails.expiry}
+                <input
+                  type="text"
+                  placeholder="MM/YY"
+                  value={cardDetails.expiry}
                   onChange={(e) => setCardDetails({ ...cardDetails, expiry: e.target.value })}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg" required
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg"
+                  required
                 />
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">CVV</label>
-                <input type="password" placeholder="123" value={cardDetails.cvv}
+                <input
+                  type="password"
+                  placeholder="123"
+                  value={cardDetails.cvv}
                   onChange={(e) => setCardDetails({ ...cardDetails, cvv: e.target.value })}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg" required
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg"
+                  required
                 />
               </div>
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">Cardholder Name</label>
-              <input type="text" placeholder="Name on card" value={cardDetails.name}
+              <input
+                type="text"
+                placeholder="Name on card"
+                value={cardDetails.name}
                 onChange={(e) => setCardDetails({ ...cardDetails, name: e.target.value })}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg" required
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg"
+                required
               />
             </div>
           </>
@@ -80,7 +106,12 @@ const PaymentGateway = ({ amount, onPayment, loading }) => {
         {paymentMethod === 'upi' && (
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">UPI ID</label>
-            <input type="text" placeholder="username@bankname" className="w-full px-4 py-2 border border-gray-300 rounded-lg" required />
+            <input
+              type="text"
+              placeholder="username@bankname"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg"
+              required
+            />
           </div>
         )}
 
@@ -103,7 +134,9 @@ const PaymentGateway = ({ amount, onPayment, loading }) => {
             <span className="text-gray-600">Amount to Pay:</span>
             <span className="text-xl font-bold text-blue-600">₹{amount.toLocaleString()}</span>
           </div>
-          <Button type="submit" loading={loading} className="w-full">Pay Now</Button>
+          <Button type="submit" loading={loading} className="w-full">
+            Pay Now
+          </Button>
         </div>
       </form>
 

@@ -69,12 +69,16 @@ const ActivityFeed = ({ activities = [] }) => {
               <div className="flex-1">
                 <div className="flex flex-wrap justify-between items-center gap-1">
                   <h4 className="font-semibold text-slate-800">{activity.title}</h4>
-                  <span className="text-xs text-slate-400 flex items-center gap-1"><i className="far fa-clock"></i> {activity.date}</span>
+                  <span className="text-xs text-slate-400 flex items-center gap-1">
+                    <i className="far fa-clock"></i> {activity.date}
+                  </span>
                 </div>
                 <p className="text-sm text-slate-600 mt-0.5">{activity.amount}</p>
               </div>
               <div className="text-right">
-                <span className={`text-xs px-2 py-1 rounded-full ${badge.color}`}>{badge.text}</span>
+                <span className={`text-xs px-2 py-1 rounded-full ${badge.color}`}>
+                  {badge.text}
+                </span>
               </div>
             </div>
           );

@@ -19,11 +19,9 @@ const LoanDetails = () => {
     try {
       const data = await get(`/loans/${id}`);
       setLoan(data);
-    }
-    catch (error) {
+    } catch (error) {
       console.error('Failed to fetch loan details:', error);
-    }
-    finally {
+    } finally {
       setLoading(false);
     }
   };
@@ -109,7 +107,9 @@ const LoanDetails = () => {
                       </svg>
                       <span className="text-sm text-gray-700">{doc.name}</span>
                     </div>
-                    <a href={doc.url} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-700 text-sm">Download</a>
+                    <a href={doc.url} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-700 text-sm">
+                      Download
+                    </a>
                   </div>
                 ))}
               </div>

@@ -9,16 +9,15 @@ const AdminReports = () => {
   const [reportData, setReportData] = useState(null);
   const [loading, setLoading] = useState(false);
   const { get } = useApi();
+
   const fetchReport = async () => {
     setLoading(true);
     try {
       const data = await get(`/admin/reports/${reportType}?range=${dateRange}`);
       setReportData(data);
-    }
-    catch (error) {
+    } catch (error) {
       console.error('Failed to fetch report:', error);
-    }
-    finally {
+    } finally {
       setLoading(false);
     }
   };
@@ -37,11 +36,11 @@ const AdminReports = () => {
       a.href = url;
       a.download = `${reportType}_report.${format}`;
       a.click();
-    }
-    catch (error) {
+    } catch (error) {
       console.error('Failed to export report:', error);
     }
   };
+
   const COLORS = ['#3B82F6', '#10B981', '#F59E0B', '#EF4444', '#8B5CF6'];
 
   return (
@@ -54,24 +53,36 @@ const AdminReports = () => {
               <p className="text-blue-100 mt-1">Monitor platform performance and metrics</p>
             </div>
             <div className="flex gap-3">
-              <select value={reportType} onChange={(e) => setReportType(e.target.value)}
-                className="px-4 py-2 rounded-lg bg-white text-gray-800">
+              <select
+                value={reportType}
+                onChange={(e) => setReportType(e.target.value)}
+                className="px-4 py-2 rounded-lg bg-white text-gray-800"
+              >
                 <option value="loans">Loan Analytics</option>
                 <option value="users">User Analytics</option>
                 <option value="repayments">Repayment Analytics</option>
                 <option value="kyc">KYC Analytics</option>
               </select>
-              <select value={dateRange} onChange={(e) => setDateRange(e.target.value)}
-                className="px-4 py-2 rounded-lg bg-white text-gray-800">
+              <select
+                value={dateRange}
+                onChange={(e) => setDateRange(e.target.value)}
+                className="px-4 py-2 rounded-lg bg-white text-gray-800"
+              >
                 <option value="week">Last 7 Days</option>
                 <option value="month">Last 30 Days</option>
                 <option value="quarter">Last 3 Months</option>
                 <option value="year">Last Year</option>
               </select>
-              <button onClick={() => exportReport('csv')} className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700">
+              <button
+                onClick={() => exportReport('csv')}
+                className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700"
+              >
                 Export CSV
               </button>
-              <button onClick={() => exportReport('pdf')} className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700">
+              <button
+                onClick={() => exportReport('pdf')}
+                className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700"
+              >
                 Export PDF
               </button>
             </div>
@@ -125,9 +136,16 @@ const AdminReports = () => {
                 <h3 className="text-lg font-semibold text-gray-800 mb-4">Distribution</h3>
                 <ResponsiveContainer width="100%" height={300}>
                   <PieChart>
-                    <Pie data={reportData.distribution} cx="50%" cy="50%" labelLine={false}
+                    <Pie
+                      data={reportData.distribution}
+                      cx="50%"
+                      cy="50%"
+                      labelLine={false}
                       label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
-                      outerRadius={80} fill="#8884d8" dataKey="value">
+                      outerRadius={80}
+                      fill="#8884d8"
+                      dataKey="value"
+                    >
                       {reportData.distribution.map((entry, index) => (
                         <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                       ))}

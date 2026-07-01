@@ -27,11 +27,9 @@ const BankAccounts = () => {
     try {
       const data = await get('/user/bank-accounts');
       setAccounts(data);
-    }
-    catch (error) {
+    } catch (error) {
       console.error('Failed to fetch bank accounts:', error);
-    }
-    finally {
+    } finally {
       setLoading(false);
     }
   };
@@ -72,11 +70,9 @@ const BankAccounts = () => {
         accountType: 'savings'
       });
       fetchAccounts();
-    }
-    catch (error) {
+    } catch (error) {
       setErrors({ submit: error.response?.data?.message || 'Failed to add bank account' });
-    }
-    finally {
+    } finally {
       setSubmitting(false);
     }
   };
@@ -85,8 +81,7 @@ const BankAccounts = () => {
     try {
       await put(`/user/bank-accounts/${accountId}/default`);
       fetchAccounts();
-    }
-    catch (error) {
+    } catch (error) {
       console.error('Failed to set default account:', error);
     }
   };
@@ -96,8 +91,7 @@ const BankAccounts = () => {
       try {
         await post(`/user/bank-accounts/${accountId}/delete`);
         fetchAccounts();
-      }
-      catch (error) {
+      } catch (error) {
         console.error('Failed to delete bank account:', error);
       }
     }
@@ -124,8 +118,10 @@ const BankAccounts = () => {
               <h2 className="text-2xl font-bold text-white">Bank Accounts</h2>
               <p className="text-blue-100 mt-1">Manage your linked bank accounts</p>
             </div>
-            <button onClick={() => setShowAddForm(true)}
-              className="px-4 py-2 bg-white text-blue-600 rounded-lg font-medium hover:bg-blue-50">
+            <button
+              onClick={() => setShowAddForm(true)}
+              className="px-4 py-2 bg-white text-blue-600 rounded-lg font-medium hover:bg-blue-50"
+            >
               + Add Account
             </button>
           </div>
@@ -157,9 +153,19 @@ const BankAccounts = () => {
                     </div>
                     <div className="flex gap-2">
                       {!account.isDefault && (
-                        <button onClick={() => setDefaultAccount(account.id)} className="text-sm text-blue-600 hover:text-blue-700">Set as Default</button>
+                        <button
+                          onClick={() => setDefaultAccount(account.id)}
+                          className="text-sm text-blue-600 hover:text-blue-700"
+                        >
+                          Set as Default
+                        </button>
                       )}
-                      <button onClick={() => deleteAccount(account.id)} className="text-sm text-red-600 hover:text-red-700">Remove</button>
+                      <button
+                        onClick={() => deleteAccount(account.id)}
+                        className="text-sm text-red-600 hover:text-red-700"
+                      >
+                        Remove
+                      </button>
                     </div>
                   </div>
                 </div>
@@ -184,46 +190,78 @@ const BankAccounts = () => {
 
             <form onSubmit={handleSubmit} className="p-6 space-y-4">
               {errors.submit && (
-                <div className="p-3 bg-red-100 border border-red-200 rounded-lg text-red-700 text-sm">{errors.submit}</div>
+                <div className="p-3 bg-red-100 border border-red-200 rounded-lg text-red-700 text-sm">
+                  {errors.submit}
+                </div>
               )}
+
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Account Holder Name</label>
-                <input type="text" value={formData.accountHolderName} onChange={(e) => setFormData({ ...formData, accountHolderName: e.target.value })}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" required />
+                <input
+                  type="text"
+                  value={formData.accountHolderName}
+                  onChange={(e) => setFormData({ ...formData, accountHolderName: e.target.value })}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                  required
+                />
                 {errors.accountHolderName && <p className="text-xs text-red-500 mt-1">{errors.accountHolderName}</p>}
               </div>
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Account Number</label>
-                <input type="text" value={formData.accountNumber} onChange={(e) => setFormData({ ...formData, accountNumber: e.target.value })}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" required/>
+                <input
+                  type="text"
+                  value={formData.accountNumber}
+                  onChange={(e) => setFormData({ ...formData, accountNumber: e.target.value })}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                  required
+                />
                 {errors.accountNumber && <p className="text-xs text-red-500 mt-1">{errors.accountNumber}</p>}
               </div>
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Confirm Account Number</label>
-                <input type="text" value={formData.confirmAccountNumber} onChange={(e) => setFormData({ ...formData, confirmAccountNumber: e.target.value })}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" required/>
+                <input
+                  type="text"
+                  value={formData.confirmAccountNumber}
+                  onChange={(e) => setFormData({ ...formData, confirmAccountNumber: e.target.value })}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                  required
+                />
                 {errors.confirmAccountNumber && <p className="text-xs text-red-500 mt-1">{errors.confirmAccountNumber}</p>}
               </div>
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">IFSC Code</label>
-                <input type="text" value={formData.ifscCode} onChange={(e) => setFormData({ ...formData, ifscCode: e.target.value.toUpperCase() })}
-                  placeholder="SBIN0001234" className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 uppercase" required/>
+                <input
+                  type="text"
+                  value={formData.ifscCode}
+                  onChange={(e) => setFormData({ ...formData, ifscCode: e.target.value.toUpperCase() })}
+                  placeholder="SBIN0001234"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 uppercase"
+                  required
+                />
                 {errors.ifscCode && <p className="text-xs text-red-500 mt-1">{errors.ifscCode}</p>}
               </div>
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Bank Name</label>
-                <input type="text" value={formData.bankName} onChange={(e) => setFormData({ ...formData, bankName: e.target.value })}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" required/>
+                <input
+                  type="text"
+                  value={formData.bankName}
+                  onChange={(e) => setFormData({ ...formData, bankName: e.target.value })}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                  required
+                />
               </div>
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Account Type</label>
-                <select value={formData.accountType} onChange={(e) => setFormData({ ...formData, accountType: e.target.value })}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                <select
+                  value={formData.accountType}
+                  onChange={(e) => setFormData({ ...formData, accountType: e.target.value })}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                >
                   <option value="savings">Savings Account</option>
                   <option value="current">Current Account</option>
                   <option value="salary">Salary Account</option>
@@ -231,8 +269,14 @@ const BankAccounts = () => {
               </div>
 
               <div className="flex gap-3 pt-4">
-                <Button type="submit" loading={submitting} className="flex-1">Add Account</Button>
-                <button type="button" onClick={() => setShowAddForm(false)} className="flex-1 px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50">
+                <Button type="submit" loading={submitting} className="flex-1">
+                  Add Account
+                </Button>
+                <button
+                  type="button"
+                  onClick={() => setShowAddForm(false)}
+                  className="flex-1 px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50"
+                >
                   Cancel
                 </button>
               </div>
