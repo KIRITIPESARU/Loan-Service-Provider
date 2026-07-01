@@ -23,9 +23,11 @@ const ReferralProgram = () => {
     try {
       const data = await get('/user/referral');
       setReferralData(data);
-    } catch (error) {
+    }
+    catch (error) {
       console.error('Failed to fetch referral data:', error);
-    } finally {
+    }
+    finally {
       setLoading(false);
     }
   };
@@ -61,26 +63,18 @@ const ReferralProgram = () => {
       <div className="bg-gradient-to-r from-purple-600 to-pink-600 rounded-2xl shadow-xl p-8 mb-8 text-white text-center">
         <div className="text-5xl mb-4">🎁</div>
         <h1 className="text-3xl font-bold mb-2">Refer & Earn</h1>
-        <p className="text-purple-100 mb-6">
-          Invite your friends and earn rewards for every successful loan
-        </p>
+        <p className="text-purple-100 mb-6">Invite your friends and earn rewards for every successful loan</p>
         <div className="flex justify-center gap-4 flex-wrap">
-          <button
-            onClick={copyReferralLink}
-            className="px-6 py-3 bg-white text-purple-600 rounded-lg font-semibold hover:bg-purple-50"
-          >
+          <button className="px-6 py-3 bg-white text-purple-600 rounded-lg font-semibold hover:bg-purple-50"
+            onClick={copyReferralLink}>
             {copied ? 'Copied! ✓' : 'Copy Referral Link'}
           </button>
-          <button
-            onClick={shareOnWhatsApp}
-            className="px-6 py-3 bg-green-500 text-white rounded-lg font-semibold hover:bg-green-600"
-          >
+          <button className="px-6 py-3 bg-green-500 text-white rounded-lg font-semibold hover:bg-green-600"
+            onClick={shareOnWhatsApp}>
             Share on WhatsApp
           </button>
-          <button
-            onClick={shareOnTwitter}
-            className="px-6 py-3 bg-blue-400 text-white rounded-lg font-semibold hover:bg-blue-500"
-          >
+          <button className="px-6 py-3 bg-blue-400 text-white rounded-lg font-semibold hover:bg-blue-500"
+            onClick={shareOnTwitter}>
             Share on Twitter
           </button>
         </div>

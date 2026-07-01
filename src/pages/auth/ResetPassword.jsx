@@ -21,36 +21,35 @@ const ResetPassword = () => {
     if (!resetToken) {
       setStatus('error');
       setMessage('Invalid or missing reset token');
-    } else {
+    }
+    else {
       setToken(resetToken);
     }
   }, [searchParams]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
     if (password.length < 8) {
       setMessage('Password must be at least 8 characters');
       return;
     }
-    
     if (password !== confirmPassword) {
       setMessage('Passwords do not match');
       return;
     }
-
     setLoading(true);
     try {
       await post('/auth/reset-password', { token, password });
-      setStatus('success');
-      setMessage('Password reset successfully!');
+      setStatus('success'); setMessage('Password reset successfully!');
       setTimeout(() => {
         navigate('/login');
       }, 3000);
-    } catch (error) {
+    }
+    catch (error) {
       setStatus('error');
       setMessage(error.response?.data?.message || 'Failed to reset password');
-    } finally {
+    }
+    finally {
       setLoading(false);
     }
   };
@@ -79,43 +78,16 @@ const ResetPassword = () => {
           <h2 className="text-3xl font-bold text-gray-800">Reset Password</h2>
           <p className="text-gray-600 mt-2">Enter your new password</p>
         </div>
-
         {status === 'error' && (
-          <div className="mb-6 p-3 bg-red-100 border border-red-200 rounded-lg text-red-700 text-sm">
-            {message}
-          </div>
+          <div className="mb-6 p-3 bg-red-100 border border-red-200 rounded-lg text-red-700 text-sm">{message}</div>
         )}
-
         <form onSubmit={handleSubmit} className="space-y-6">
-          <Input
-            label="New Password"
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            placeholder="••••••••"
-            required
-          />
-          <Input
-            label="Confirm Password"
-            type="password"
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
-            placeholder="••••••••"
-            required
-          />
-
-          <Button type="submit" loading={loading} className="w-full">
-            Reset Password
-          </Button>
+          <Input label="New Password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="••••••••" required />
+          <Input label="Confirm Password" type="password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} placeholder="••••••••" required />
+          <Button type="submit" loading={loading} className="w-full">Reset Password</Button>
         </form>
-
         <p className="text-center text-gray-600 mt-6">
-          <button
-            onClick={() => navigate('/login')}
-            className="text-blue-600 hover:text-blue-700"
-          >
-            Back to Login
-          </button>
+          <button onClick={() => navigate('/login')} className="text-blue-600 hover:text-blue-700">Back to Login</button>
         </p>
       </div>
     </div>

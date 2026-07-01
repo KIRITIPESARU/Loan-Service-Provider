@@ -17,9 +17,11 @@ const Offers = () => {
     try {
       const data = await get('/user/offers');
       setOffers(data);
-    } catch (error) {
+    }
+    catch (error) {
       console.error('Failed to fetch offers:', error);
-    } finally {
+    }
+    finally {
       setLoading(false);
     }
   };
@@ -70,19 +72,15 @@ const Offers = () => {
           <h2 className="text-2xl font-bold text-white">Offers & Promotions</h2>
           <p className="text-blue-100 mt-1">Exclusive deals and discounts for you</p>
         </div>
-
         <div className="border-b border-gray-200 px-8">
           <div className="flex gap-6">
             {['all', 'active', 'expired'].map((tab) => (
-              <button
-                key={tab}
-                onClick={() => setActiveTab(tab)}
+              <button key={tab} onClick={() => setActiveTab(tab)}
                 className={`py-3 px-1 border-b-2 font-medium text-sm capitalize ${
                   activeTab === tab
                     ? 'border-blue-500 text-blue-600'
                     : 'border-transparent text-gray-500 hover:text-gray-700'
-                }`}
-              >
+                }`}>
                 {tab}
               </button>
             ))}
@@ -129,17 +127,12 @@ const Offers = () => {
                       )}
                     </div>
                     {offer.isActive && (
-                      <Link
-                        to={offer.ctaLink || '/apply-loan'}
-                        className="mt-4 block text-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
-                      >
+                      <Link to={offer.ctaLink || '/apply-loan'} className="mt-4 block text-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
                         {offer.ctaText || 'Apply Now'}
                       </Link>
                     )}
                     {!offer.isActive && (
-                      <div className="mt-4 text-center text-gray-400 text-sm">
-                        Offer Expired
-                      </div>
+                      <div className="mt-4 text-center text-gray-400 text-sm">Offer Expired</div>
                     )}
                   </div>
                 </div>

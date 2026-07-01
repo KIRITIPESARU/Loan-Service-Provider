@@ -31,9 +31,7 @@ const LoanCalculator = () => {
       <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
         <div className="bg-gradient-to-r from-blue-600 to-indigo-600 px-8 py-6">
           <h2 className="text-2xl font-bold text-white">Loan EMI Calculator</h2>
-          <p className="text-blue-100 mt-1">
-            Calculate your monthly payments and total interest
-          </p>
+          <p className="text-blue-100 mt-1">Calculate your monthly payments and total interest</p>
         </div>
 
         <div className="p-8">
@@ -41,18 +39,8 @@ const LoanCalculator = () => {
             {/* Input Section */}
             <div className="space-y-6">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Loan Amount: {formatCurrency(loanAmount)}
-                </label>
-                <input
-                  type="range"
-                  min="10000"
-                  max="5000000"
-                  step="10000"
-                  value={loanAmount}
-                  onChange={(e) => setLoanAmount(Number(e.target.value))}
-                  className="w-full"
-                />
+                <label className="block text-sm font-medium text-gray-700 mb-2">Loan Amount: {formatCurrency(loanAmount)}</label>
+                <input type="range" min="10000" max="5000000" step="10000" value={loanAmount} onChange={(e) => setLoanAmount(Number(e.target.value))} className="w-full"/>
                 <div className="flex justify-between text-xs text-gray-500 mt-1">
                   <span>₹10,000</span>
                   <span>₹50,00,000</span>
@@ -60,18 +48,8 @@ const LoanCalculator = () => {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Interest Rate: {interestRate}% p.a.
-                </label>
-                <input
-                  type="range"
-                  min="6"
-                  max="24"
-                  step="0.5"
-                  value={interestRate}
-                  onChange={(e) => setInterestRate(Number(e.target.value))}
-                  className="w-full"
-                />
+                <label className="block text-sm font-medium text-gray-700 mb-2">Interest Rate: {interestRate}% p.a.</label>
+                <input type="range" min="6" max="24" step="0.5" value={interestRate} onChange={(e) => setInterestRate(Number(e.target.value))} className="w-full"/>
                 <div className="flex justify-between text-xs text-gray-500 mt-1">
                   <span>6%</span>
                   <span>24%</span>
@@ -79,18 +57,8 @@ const LoanCalculator = () => {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Loan Tenure: {tenure} months ({Math.floor(tenure/12)} years {tenure%12} months)
-                </label>
-                <input
-                  type="range"
-                  min="6"
-                  max="60"
-                  step="6"
-                  value={tenure}
-                  onChange={(e) => setTenure(Number(e.target.value))}
-                  className="w-full"
-                />
+                <label className="block text-sm font-medium text-gray-700 mb-2">Loan Tenure: {tenure} months ({Math.floor(tenure/12)} years {tenure%12} months)</label>
+                <input type="range" min="6" max="60" step="6" value={tenure} onChange={(e) => setTenure(Number(e.target.value))} className="w-full"/>
                 <div className="flex justify-between text-xs text-gray-500 mt-1">
                   <span>6 months</span>
                   <span>60 months</span>
@@ -121,9 +89,7 @@ const LoanCalculator = () => {
               </div>
 
               <div className="mt-6 p-4 bg-blue-50 rounded-lg">
-                <p className="text-sm text-blue-800">
-                  💡 Tip: A higher down payment or shorter tenure can significantly reduce the total interest paid.
-                </p>
+                <p className="text-sm text-blue-800">💡 Tip: A higher down payment or shorter tenure can significantly reduce the total interest paid.</p>
               </div>
             </div>
           </div>
@@ -131,9 +97,7 @@ const LoanCalculator = () => {
           {/* Amortization Table Preview */}
           <div className="mt-8">
             <details className="group">
-              <summary className="cursor-pointer text-blue-600 hover:text-blue-700 font-medium">
-                View Amortization Schedule
-              </summary>
+              <summary className="cursor-pointer text-blue-600 hover:text-blue-700 font-medium">View Amortization Schedule</summary>
               <div className="mt-4 overflow-x-auto">
                 <table className="min-w-full divide-y divide-gray-200">
                   <thead className="bg-gray-50">

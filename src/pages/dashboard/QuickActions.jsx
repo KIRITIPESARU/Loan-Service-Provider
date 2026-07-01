@@ -7,36 +7,20 @@ const QuickActions = () => {
 
   const actions = [
     { 
-      label: "Apply for Loan", 
-      subtitle: "Get instant approval", 
-      icon: "fas fa-hand-holding-usd",
-      bg: "bg-blue-50",
-      hoverBg: "hover:bg-blue-100",
-      onClick: () => navigate('/apply-loan')
+      label: "Apply for Loan", subtitle: "Get instant approval", icon: "fas fa-hand-holding-usd",
+      bg: "bg-blue-50", hoverBg: "hover:bg-blue-100", onClick: () => navigate('/apply-loan')
     },
     { 
-      label: "Make Payment", 
-      subtitle: "Pay your EMI", 
-      icon: "fas fa-credit-card",
-      bg: "bg-emerald-50",
-      hoverBg: "hover:bg-emerald-100",
-      onClick: () => navigate('/payments')
+      label: "Make Payment", subtitle: "Pay your EMI", icon: "fas fa-credit-card",
+      bg: "bg-emerald-50", hoverBg: "hover:bg-emerald-100", onClick: () => navigate('/payments')
     },
     { 
-      label: "Check KYC", 
-      subtitle: "Complete verification", 
-      icon: "fas fa-id-card",
-      bg: "bg-purple-50",
-      hoverBg: "hover:bg-purple-100",
-      onClick: () => navigate('/kyc')
+      label: "Check KYC", subtitle: "Complete verification", icon: "fas fa-id-card",
+      bg: "bg-purple-50", hoverBg: "hover:bg-purple-100", onClick: () => navigate('/kyc')
     },
     { 
-      label: "Get Support", 
-      subtitle: "24/7 assistance", 
-      icon: "fas fa-headset",
-      bg: "bg-amber-50",
-      hoverBg: "hover:bg-amber-100",
-      onClick: () => navigate('/support')
+      label: "Get Support", subtitle: "24/7 assistance", icon: "fas fa-headset",
+      bg: "bg-amber-50", hoverBg: "hover:bg-amber-100", onClick: () => navigate('/support')
     }
   ];
 
@@ -50,11 +34,8 @@ const QuickActions = () => {
       
       <div className="p-5 space-y-3">
         {actions.map((action, idx) => (
-          <button
-            key={idx}
-            onClick={action.onClick}
-            className={`quick-action-btn w-full flex items-center gap-4 p-3 rounded-xl ${action.bg} ${action.hoverBg} transition-all group`}
-          >
+          <button key={idx} onClick={action.onClick}
+            className={`quick-action-btn w-full flex items-center gap-4 p-3 rounded-xl ${action.bg} ${action.hoverBg} transition-all group`}>
             <div className="w-10 h-10 rounded-full bg-white shadow-sm flex items-center justify-center">
               <i className={`${action.icon} text-slate-700 text-lg`}></i>
             </div>
