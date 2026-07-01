@@ -24,11 +24,9 @@ const MyDocuments = () => {
     try {
       const data = await get('/user/documents');
       setDocuments(data);
-    }
-    catch (error) {
+    } catch (error) {
       console.error('Failed to fetch documents:', error);
-    }
-    finally {
+    } finally {
       setLoading(false);
     }
   };
@@ -43,11 +41,9 @@ const MyDocuments = () => {
       await post('/user/documents/upload', formData);
       fetchDocuments();
       setShowUpload(false);
-    }
-    catch (error) {
+    } catch (error) {
       console.error('Failed to upload document:', error);
-    }
-    finally {
+    } finally {
       setUploading(false);
     }
   };
@@ -60,8 +56,7 @@ const MyDocuments = () => {
       a.href = url;
       a.download = fileName;
       a.click();
-    }
-    catch (error) {
+    } catch (error) {
       console.error('Failed to download document:', error);
     }
   };
@@ -71,8 +66,7 @@ const MyDocuments = () => {
       try {
         await post(`/user/documents/${docId}/delete`);
         fetchDocuments();
-      }
-      catch (error) {
+      } catch (error) {
         console.error('Failed to delete document:', error);
       }
     }
@@ -102,8 +96,10 @@ const MyDocuments = () => {
               <h2 className="text-2xl font-bold text-white">My Documents</h2>
               <p className="text-blue-100 mt-1">Manage your uploaded documents</p>
             </div>
-            <button onClick={() => setShowUpload(true)}
-              className="px-4 py-2 bg-white text-blue-600 rounded-lg font-medium hover:bg-blue-50">
+            <button
+              onClick={() => setShowUpload(true)}
+              className="px-4 py-2 bg-white text-blue-600 rounded-lg font-medium hover:bg-blue-50"
+            >
               + Upload Document
             </button>
           </div>
@@ -114,7 +110,9 @@ const MyDocuments = () => {
           <div className="mb-8">
             <h3 className="text-lg font-semibold text-gray-800 mb-4">KYC Documents</h3>
             {documents.kyc.length === 0 ? (
-              <div className="text-center py-8 bg-gray-50 rounded-lg"><p className="text-gray-500">No KYC documents uploaded</p></div>
+              <div className="text-center py-8 bg-gray-50 rounded-lg">
+                <p className="text-gray-500">No KYC documents uploaded</p>
+              </div>
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {documents.kyc.map((doc) => (
@@ -124,18 +122,28 @@ const MyDocuments = () => {
                         <span className="text-2xl">{getFileIcon(doc.fileType)}</span>
                         <div>
                           <p className="font-medium text-gray-800">{doc.name}</p>
-                          <p className="text-xs text-gray-500">{new Date(doc.uploadedAt).toLocaleDateString()}</p>
+                          <p className="text-xs text-gray-500">
+                            {new Date(doc.uploadedAt).toLocaleDateString()}
+                          </p>
                         </div>
                       </div>
-                      <span className={`text-xs px-2 py-1 rounded-full ${doc.verified ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800'}`}>
+                      <span className={`text-xs px-2 py-1 rounded-full ${
+                        doc.verified ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800'
+                      }`}>
                         {doc.verified ? 'Verified' : 'Pending'}
                       </span>
                     </div>
                     <div className="flex justify-end gap-2">
-                      <button onClick={() => handleDownload(doc.id, doc.name)} className="text-blue-600 hover:text-blue-700 text-sm">
+                      <button
+                        onClick={() => handleDownload(doc.id, doc.name)}
+                        className="text-blue-600 hover:text-blue-700 text-sm"
+                      >
                         Download
                       </button>
-                      <button onClick={() => handleDelete(doc.id)} className="text-red-600 hover:text-red-700 text-sm">
+                      <button
+                        onClick={() => handleDelete(doc.id)}
+                        className="text-red-600 hover:text-red-700 text-sm"
+                      >
                         Delete
                       </button>
                     </div>
@@ -162,7 +170,12 @@ const MyDocuments = () => {
                       </div>
                     </div>
                     <div className="flex justify-end gap-2">
-                      <button onClick={() => handleDownload(doc.id, doc.name)} className="text-blue-600 hover:text-blue-700 text-sm">Download</button>
+                      <button
+                        onClick={() => handleDownload(doc.id, doc.name)}
+                        className="text-blue-600 hover:text-blue-700 text-sm"
+                      >
+                        Download
+                      </button>
                     </div>
                   </div>
                 ))}
@@ -187,14 +200,23 @@ const MyDocuments = () => {
             <div className="p-6">
               <div className="mb-4">
                 <label className="block text-sm font-medium text-gray-700 mb-2">Document Category</label>
-                <select value={selectedType} onChange={(e) => setSelectedType(e.target.value)} className="w-full px-4 py-2 border border-gray-300 rounded-lg">
+                <select
+                  value={selectedType}
+                  onChange={(e) => setSelectedType(e.target.value)}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg"
+                >
                   <option value="kyc">KYC Document</option>
                   <option value="loan">Loan Document</option>
                   <option value="others">Others</option>
                 </select>
               </div>
-              <DocumentUpload title="Select Document" description="Upload PDF, JPG, or PNG files (Max 5MB)" accept=".pdf,.jpg,.jpeg,.png"
-                onUpload={(file) => handleUpload(file, selectedType)} loading={uploading} />
+              <DocumentUpload
+                title="Select Document"
+                description="Upload PDF, JPG, or PNG files (Max 5MB)"
+                accept=".pdf,.jpg,.jpeg,.png"
+                onUpload={(file) => handleUpload(file, selectedType)}
+                loading={uploading}
+              />
             </div>
           </div>
         </div>

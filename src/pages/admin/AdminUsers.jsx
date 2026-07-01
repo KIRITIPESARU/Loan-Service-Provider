@@ -23,11 +23,9 @@ const AdminUsers = () => {
       const data = await get(`/admin/users?page=${currentPage}&search=${searchTerm}`);
       setUsers(data.users);
       setTotalPages(data.totalPages);
-    }
-    catch (error) {
+    } catch (error) {
       console.error('Failed to fetch users:', error);
-    }
-    finally {
+    } finally {
       setLoading(false);
     }
   };
@@ -36,8 +34,7 @@ const AdminUsers = () => {
     try {
       await post(`/admin/users/${userId}/status`, { status });
       fetchUsers();
-    }
-    catch (error) {
+    } catch (error) {
       console.error('Failed to update user status:', error);
     }
   };
@@ -114,15 +111,26 @@ const AdminUsers = () => {
                       </span>
                     </td>
                     <td className="px-6 py-4">
-                      <select value={user.status} onChange={(e) => handleStatusChange(user.id, e.target.value)} className="text-sm border rounded px-2 py-1">
+                      <select
+                        value={user.status}
+                        onChange={(e) => handleStatusChange(user.id, e.target.value)}
+                        className="text-sm border rounded px-2 py-1"
+                      >
                         <option value="active">Active</option>
                         <option value="suspended">Suspended</option>
                         <option value="banned">Banned</option>
                       </select>
                     </td>
-                    <td className="px-6 py-4 text-sm text-gray-500">{new Date(user.createdAt).toLocaleDateString()}</td>
+                    <td className="px-6 py-4 text-sm text-gray-500">
+                      {new Date(user.createdAt).toLocaleDateString()}
+                    </td>
                     <td className="px-6 py-4">
-                      <button onClick={() => handleViewDetails(user)} className="text-blue-600 hover:text-blue-800 text-sm">View Details</button>
+                      <button
+                        onClick={() => handleViewDetails(user)}
+                        className="text-blue-600 hover:text-blue-800 text-sm"
+                      >
+                        View Details
+                      </button>
                     </td>
                   </tr>
                 ))

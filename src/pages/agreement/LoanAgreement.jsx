@@ -24,11 +24,9 @@ const LoanAgreement = () => {
     try {
       const data = await get(`/loans/${id}/agreement`);
       setAgreement(data);
-    }
-    catch (error) {
+    } catch (error) {
       console.error('Failed to fetch agreement:', error);
-    }
-    finally {
+    } finally {
       setLoading(false);
     }
   };
@@ -47,12 +45,10 @@ const LoanAgreement = () => {
       await post(`/loans/${id}/sign`, { signature: signatureData });
       alert('Agreement signed successfully!');
       navigate(`/loans/${id}`);
-    }
-    catch (error) {
+    } catch (error) {
       console.error('Failed to sign agreement:', error);
       alert('Failed to sign agreement. Please try again.');
-    }
-    finally {
+    } finally {
       setSigning(false);
       setShowSignaturePad(false);
     }
@@ -71,7 +67,9 @@ const LoanAgreement = () => {
       <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
         <div className="bg-gradient-to-r from-blue-600 to-indigo-600 px-8 py-6">
           <h2 className="text-2xl font-bold text-white">Loan Agreement</h2>
-          <p className="text-blue-100 mt-1">Please review and sign the loan agreement</p>
+          <p className="text-blue-100 mt-1">
+            Please review and sign the loan agreement
+          </p>
         </div>
 
         <div className="p-8">
@@ -83,6 +81,7 @@ const LoanAgreement = () => {
                 This Loan Agreement (the "Agreement") is made and entered into as of {new Date().toLocaleDateString()}
                 by and between LSP Platform ("Lender") and {agreement?.borrowerName} ("Borrower").
               </p>
+
               <h4 className="font-semibold text-gray-800 mt-4 mb-2">1. LOAN AMOUNT AND TERMS</h4>
               <p className="text-gray-700 mb-2">
                 Lender agrees to lend to Borrower, and Borrower agrees to borrow from Lender,
@@ -94,22 +93,26 @@ const LoanAgreement = () => {
                 <li>EMI Amount: ₹{Math.round(agreement?.emi).toLocaleString()}</li>
                 <li>First Payment Due: {new Date(agreement?.firstDueDate).toLocaleDateString()}</li>
               </ul>
+
               <h4 className="font-semibold text-gray-800 mt-4 mb-2">2. REPAYMENT</h4>
               <p className="text-gray-700 mb-2">
                 Borrower agrees to repay the Loan in {agreement?.tenure} equal monthly installments.
                 Each installment shall be due on the same day of each month.
               </p>
+
               <h4 className="font-semibold text-gray-800 mt-4 mb-2">3. PREPAYMENT</h4>
               <p className="text-gray-700 mb-2">
                 Borrower may prepay the Loan in whole or in part at any time after 6 months
                 from the date of first disbursement without any prepayment penalty.
               </p>
+
               <h4 className="font-semibold text-gray-800 mt-4 mb-2">4. DEFAULT</h4>
               <p className="text-gray-700 mb-2">
                 In the event of default, Lender shall have the right to demand immediate
                 repayment of the entire outstanding principal amount along with accrued interest.
                 A late fee of 2% per month shall be charged on overdue amounts.
               </p>
+
               <h4 className="font-semibold text-gray-800 mt-4 mb-2">5. GOVERNING LAW</h4>
               <p className="text-gray-700 mb-2">
                 This Agreement shall be governed by and construed in accordance with the laws of India.
@@ -122,7 +125,12 @@ const LoanAgreement = () => {
           {/* Acceptance Checkbox */}
           <div className="mb-6">
             <label className="flex items-start">
-              <input type="checkbox" checked={agreed} onChange={(e) => setAgreed(e.target.checked)} className="mt-1 mr-3" />
+              <input
+                type="checkbox"
+                checked={agreed}
+                onChange={(e) => setAgreed(e.target.checked)}
+                className="mt-1 mr-3"
+              />
               <span className="text-sm text-gray-700">
                 I hereby confirm that I have read, understood, and agree to all the terms and conditions
                 of this Loan Agreement. I acknowledge that this is a legally binding document and I am
@@ -138,8 +146,12 @@ const LoanAgreement = () => {
               <div className="bg-gray-50 rounded-lg p-6 text-center">
                 {!showSignaturePad ? (
                   <div>
-                    <p className="text-gray-600 mb-4">Please sign below to complete the agreement</p>
-                    <Button onClick={handleSign} disabled={!agreed}>Sign Agreement</Button>
+                    <p className="text-gray-600 mb-4">
+                      Please sign below to complete the agreement
+                    </p>
+                    <Button onClick={handleSign} disabled={!agreed}>
+                      Sign Agreement
+                    </Button>
                   </div>
                 ) : (
                   <SignaturePad onSave={handleSignatureSave} onCancel={() => setShowSignaturePad(false)} />

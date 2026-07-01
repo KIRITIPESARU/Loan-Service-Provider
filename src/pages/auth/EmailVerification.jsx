@@ -15,8 +15,7 @@ const EmailVerification = () => {
         const token = searchParams.get('token');
         if (token) {
             verifyEmail(token);
-        }
-        else {
+        } else {
             setStatus('error');
             setMessage('Invalid verification link');
         }
@@ -30,8 +29,7 @@ const EmailVerification = () => {
             setTimeout(() => {
                 navigate('/login');
             }, 3000);
-        }
-        catch (error) {
+        } catch (error) {
             setStatus('error');
             setMessage(error.response?.data?.message || 'Verification failed. Please try again.');
         }
@@ -41,8 +39,7 @@ const EmailVerification = () => {
         try {
             await post('/auth/resend-verification');
             setMessage('Verification email sent! Please check your inbox.');
-        }
-        catch (error) {
+        } catch (error) {
             setMessage('Failed to send verification email. Please try again.');
         }
     };
@@ -83,7 +80,10 @@ const EmailVerification = () => {
                         <h2 className="text-2xl font-bold text-gray-800 mb-2">Verification Failed</h2>
                         <p className="text-gray-600 mb-6">{message}</p>
                         <Button onClick={resendVerification}>Resend Verification Email</Button>
-                        <button onClick={() => navigate('/login')} className="mt-4 text-blue-600 hover:text-blue-700 text-sm">
+                        <button
+                            onClick={() => navigate('/login')}
+                            className="mt-4 text-blue-600 hover:text-blue-700 text-sm"
+                        >
                             Back to Login
                         </button>
                     </>

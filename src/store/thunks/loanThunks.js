@@ -7,3 +7,4 @@ export const applyForLoan = (loanData) => async (dispatch) => {
     }, 1000);
   });
 };
+

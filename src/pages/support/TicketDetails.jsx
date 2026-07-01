@@ -21,11 +21,9 @@ const TicketDetails = () => {
     try {
       const data = await get(`/support/tickets/${id}`);
       setTicket(data);
-    }
-    catch (error) {
+    } catch (error) {
       console.error('Failed to fetch ticket:', error);
-    }
-    finally {
+    } finally {
       setLoading(false);
     }
   };
@@ -37,11 +35,9 @@ const TicketDetails = () => {
       await post(`/support/tickets/${id}/reply`, { message: reply });
       setReply('');
       fetchTicket();
-    }
-    catch (error) {
+    } catch (error) {
       console.error('Failed to send reply:', error);
-    }
-    finally {
+    } finally {
       setSubmitting(false);
     }
   };
@@ -113,7 +109,9 @@ const TicketDetails = () => {
                   </div>
                   <span className="font-medium text-gray-800">{ticket.userName}</span>
                 </div>
-                <span className="text-xs text-gray-500">{new Date(ticket.createdAt).toLocaleString()}</span>
+                <span className="text-xs text-gray-500">
+                  {new Date(ticket.createdAt).toLocaleString()}
+                </span>
               </div>
               <p className="text-gray-700">{ticket.message}</p>
             </div>
@@ -125,7 +123,9 @@ const TicketDetails = () => {
                     <div className={`w-8 h-8 rounded-full flex items-center justify-center text-white font-bold ${reply.isAdmin ? 'bg-green-600' : 'bg-gray-600'}`}>
                       {reply.isAdmin ? 'S' : 'U'}
                     </div>
-                    <span className="font-medium text-gray-800">{reply.isAdmin ? 'Support Team' : ticket.userName}</span>
+                    <span className="font-medium text-gray-800">
+                      {reply.isAdmin ? 'Support Team' : ticket.userName}
+                    </span>
                     {reply.isAdmin && (
                       <span className="text-xs bg-green-100 text-green-800 px-2 py-0.5 rounded">Staff</span>
                     )}
@@ -143,12 +143,23 @@ const TicketDetails = () => {
           {ticket.status !== 'closed' && ticket.status !== 'resolved' && (
             <div className="border-t border-gray-200 pt-6">
               <h3 className="text-lg font-semibold text-gray-800 mb-4">Add Reply</h3>
-              <textarea className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
-                rows={4} value={reply} onChange={(e) => setReply(e.target.value)} placeholder="Type your reply here..."
+              <textarea
+                rows={4}
+                value={reply}
+                onChange={(e) => setReply(e.target.value)}
+                placeholder="Type your reply here..."
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
               />
               <div className="flex justify-end gap-3 mt-4">
-                <button className="px-6 py-2 border border-gray-300 rounded-lg hover:bg-gray-50" onClick={() => navigate('/support')}>Back</button>
-                <Button onClick={handleReply} loading={submitting} disabled={!reply.trim()}>Send Reply</Button>
+                <button
+                  onClick={() => navigate('/support')}
+                  className="px-6 py-2 border border-gray-300 rounded-lg hover:bg-gray-50"
+                >
+                  Back
+                </button>
+                <Button onClick={handleReply} loading={submitting} disabled={!reply.trim()}>
+                  Send Reply
+                </Button>
               </div>
             </div>
           )}
@@ -157,7 +168,12 @@ const TicketDetails = () => {
           {(ticket.status === 'closed' || ticket.status === 'resolved') && (
             <div className="bg-gray-50 rounded-lg p-4 text-center">
               <p className="text-gray-600">This ticket is {ticket.status}. It cannot be replied to.</p>
-              <button className="mt-3 text-blue-600 hover:text-blue-700" onClick={() => navigate('/support')}>Back to Support</button>
+              <button
+                onClick={() => navigate('/support')}
+                className="mt-3 text-blue-600 hover:text-blue-700"
+              >
+                Back to Support
+              </button>
             </div>
           )}
         </div>

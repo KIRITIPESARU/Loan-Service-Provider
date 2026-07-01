@@ -6,12 +6,14 @@ const SignaturePad = ({ onSave, onCancel }) => {
   const canvasRef = useRef(null);
   const [isDrawing, setIsDrawing] = useState(false);
   const [hasSignature, setHasSignature] = useState(false);
+
   const startDrawing = (e) => {
     const canvas = canvasRef.current;
     const ctx = canvas.getContext('2d');
     const rect = canvas.getBoundingClientRect();
     const x = (e.clientX - rect.left) * (canvas.width / rect.width);
     const y = (e.clientY - rect.top) * (canvas.height / rect.height);
+    
     setIsDrawing(true);
     ctx.beginPath();
     ctx.moveTo(x, y);
@@ -21,11 +23,13 @@ const SignaturePad = ({ onSave, onCancel }) => {
 
   const draw = (e) => {
     if (!isDrawing) return;
+    
     const canvas = canvasRef.current;
     const ctx = canvas.getContext('2d');
     const rect = canvas.getBoundingClientRect();
     const x = (e.clientX - rect.left) * (canvas.width / rect.width);
     const y = (e.clientY - rect.top) * (canvas.height / rect.height);
+    
     ctx.lineTo(x, y);
     ctx.lineWidth = 2;
     ctx.lineCap = 'round';
@@ -67,10 +71,16 @@ const SignaturePad = ({ onSave, onCancel }) => {
         />
       </div>
       <div className="flex justify-center gap-4">
-        <Button onClick={clearSignature} variant="secondary" disabled={!hasSignature}>Clear</Button>
-        <Button onClick={saveSignature} disabled={!hasSignature}>Sign & Continue</Button>
+        <Button onClick={clearSignature} variant="secondary" disabled={!hasSignature}>
+          Clear
+        </Button>
+        <Button onClick={saveSignature} disabled={!hasSignature}>
+          Sign & Continue
+        </Button>
       </div>
-      <p className="text-xs text-gray-500 text-center">Draw your signature in the box above</p>
+      <p className="text-xs text-gray-500 text-center">
+        Draw your signature in the box above
+      </p>
     </div>
   );
 };

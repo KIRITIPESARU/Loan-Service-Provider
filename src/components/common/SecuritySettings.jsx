@@ -26,8 +26,7 @@ const SecuritySettings = () => {
       await post('/user/change-password', passwords);
       alert('Password updated successfully!');
       setPasswords({ current: '', new: '', confirm: '' });
-    }
-    catch (error) {
+    } catch (error) {
       console.error(error);
     }
   };
@@ -38,8 +37,9 @@ const SecuritySettings = () => {
       await post('/user/enable-2fa', { phone: twoFA.phone });
       setTwoFA(prev => ({ ...prev, enabled: !prev.enabled }));
       alert(`Two-Factor Authentication ${!twoFA.enabled ? 'Enabled' : 'Disabled'} successfully!`);
+    } catch (error) {
+      console.error(error);
     }
-    catch (error) { console.error(error); }
   };
 
   return (
@@ -47,15 +47,24 @@ const SecuritySettings = () => {
       <div>
         <h3 className="text-lg font-semibold text-gray-800 mb-4">Change Password</h3>
         <form onSubmit={handlePasswordChange} className="space-y-4 max-w-md">
-          <Input label="Current Password" type="password" value={passwords.current}
+          <Input
+            label="Current Password"
+            type="password"
+            value={passwords.current}
             onChange={(e) => setPasswords({ ...passwords, current: e.target.value })}
             required
           />
-          <Input label="New Password" type="password" value={passwords.new}
+          <Input
+            label="New Password"
+            type="password"
+            value={passwords.new}
             onChange={(e) => setPasswords({ ...passwords, new: e.target.value })}
             required
           />
-          <Input label="Confirm New Password" type="password" value={passwords.confirm}
+          <Input
+            label="Confirm New Password"
+            type="password"
+            value={passwords.confirm}
             onChange={(e) => setPasswords({ ...passwords, confirm: e.target.value })}
             required
           />
@@ -73,12 +82,18 @@ const SecuritySettings = () => {
             </span>
           </div>
           {!twoFA.enabled && (
-            <Input label="Phone Number for OTP" type="tel" value={twoFA.phone}
+            <Input
+              label="Phone Number for OTP"
+              type="tel"
+              value={twoFA.phone}
               onChange={(e) => setTwoFA({ ...twoFA, phone: e.target.value })}
-              placeholder="+91 XXXXX XXXXX" required
+              placeholder="+91 XXXXX XXXXX"
+              required
             />
           )}
-          <Button type="submit">{twoFA.enabled ? 'Disable 2FA' : 'Enable 2FA'}</Button>
+          <Button type="submit">
+            {twoFA.enabled ? 'Disable 2FA' : 'Enable 2FA'}
+          </Button>
         </form>
       </div>
     </div>

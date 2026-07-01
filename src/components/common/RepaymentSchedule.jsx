@@ -32,10 +32,13 @@ const RepaymentSchedule = ({ repayments = [] }) => {
                 <td className="px-6 py-4 text-sm font-bold text-gray-800">#{rep.installmentNo}</td>
                 <td className="px-6 py-4 text-sm text-gray-600 font-medium">{rep.dueDate}</td>
                 <td className="px-6 py-4 text-sm font-bold text-gray-900">₹{rep.amount.toLocaleString()}</td>
-                <td className="px-6 py-4 text-xs text-gray-500">₹{rep.principal.toLocaleString()} / ₹{rep.interest.toLocaleString()}</td>
+                <td className="px-6 py-4 text-xs text-gray-500">
+                  ₹{rep.principal.toLocaleString()} / ₹{rep.interest.toLocaleString()}
+                </td>
                 <td className="px-6 py-4">
                   <span className={`px-2.5 py-0.5 rounded-full text-xs font-semibold ${
-                    rep.status === 'paid' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800'}`}>
+                    rep.status === 'paid' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800'
+                  }`}>
                     {rep.status?.toUpperCase()}
                   </span>
                 </td>

@@ -21,8 +21,9 @@ const MakeRepayment = () => {
     try {
       const data = await get(`/repayments/${repaymentId}`);
       setRepayment(data);
+    } catch (error) {
+      console.error('Failed to fetch repayment:', error);
     }
-    catch (error) { console.error('Failed to fetch repayment:', error); }
   };
 
   const handlePayment = async (paymentDetails) => {
@@ -30,12 +31,12 @@ const MakeRepayment = () => {
     try {
       await post(`/repayments/${repaymentId}/pay`, paymentDetails);
       navigate(`/loans/${loanId}`, { state: { paymentSuccess: true } });
-    }
-    catch (error) {
+    } catch (error) {
       console.error('Payment failed:', error);
       alert('Payment failed. Please try again.');
+    } finally {
+      setLoading(false);
     }
-    finally { setLoading(false); }
   };
 
   if (!repayment) {
@@ -51,8 +52,11 @@ const MakeRepayment = () => {
       <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
         <div className="bg-gradient-to-r from-green-600 to-teal-600 px-8 py-6">
           <h2 className="text-2xl font-bold text-white">Make Repayment</h2>
-          <p className="text-green-100 mt-1">Secure payment gateway powered by RBI-approved partners</p>
+          <p className="text-green-100 mt-1">
+            Secure payment gateway powered by RBI-approved partners
+          </p>
         </div>
+
         <div className="p-8">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <div>
@@ -105,8 +109,11 @@ const MakeRepayment = () => {
             </div>
 
             <div>
-              <PaymentGateway amount={repayment.principal + repayment.interest + (repayment.lateFee || 0)}
-                onPayment={handlePayment} loading={loading} />
+              <PaymentGateway
+                amount={repayment.principal + repayment.interest + (repayment.lateFee || 0)}
+                onPayment={handlePayment}
+                loading={loading}
+              />
             </div>
           </div>
         </div>
