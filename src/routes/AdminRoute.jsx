@@ -5,7 +5,6 @@ import { useSelector } from 'react-redux';
 
 const AdminRoute = () => {
   const { isAuthenticated, user, loading } = useSelector((state) => state.auth);
-
   if (loading) {
     return (
       <div className="flex justify-center items-center h-screen">
@@ -13,7 +12,6 @@ const AdminRoute = () => {
       </div>
     );
   }
-
   return isAuthenticated && user?.role === 'admin' ? <Outlet /> : <Navigate to="/unauthorized" />;
 };
 

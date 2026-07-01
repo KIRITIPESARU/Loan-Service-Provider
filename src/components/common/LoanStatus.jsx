@@ -11,7 +11,6 @@ const LoanStatus = ({ status = 'pending' }) => {
   };
 
   const style = statusStyles[status?.toLowerCase()] || 'bg-gray-50 text-gray-700 border-gray-200';
-
   return (
     <span className={`px-3 py-1 rounded-full text-xs font-bold uppercase border tracking-wider ${style}`}>
       {status}

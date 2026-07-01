@@ -27,19 +27,14 @@ const Header = ({ toggleSidebar }) => {
     <header className="h-20 bg-white border-b border-gray-200 px-6 flex items-center justify-between shadow-sm z-10">
       {/* Search Bar / Menu Button */}
       <div className="flex items-center gap-4">
-        <button
-          onClick={toggleSidebar}
-          className="lg:hidden p-2 text-gray-500 hover:bg-gray-100 rounded-lg"
-        >
+        <button onClick={toggleSidebar} className="lg:hidden p-2 text-gray-500 hover:bg-gray-100 rounded-lg">
           <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
           </svg>
         </button>
         <div className="hidden md:flex items-center gap-2 bg-gray-50 px-4 py-2 rounded-xl border border-gray-200 w-80">
           <span className="text-gray-400">🔍</span>
-          <input
-            type="text"
-            placeholder="Search loans, transactions, tickets..."
+          <input type="text" placeholder="Search loans, transactions, tickets..."
             className="bg-transparent text-sm text-gray-800 placeholder-gray-400 w-full focus:outline-none"
           />
         </div>
@@ -49,13 +44,11 @@ const Header = ({ toggleSidebar }) => {
       <div className="flex items-center gap-4 relative">
         {/* Notifications Icon */}
         <div className="relative">
-          <button
+          <button className="p-2.5 bg-gray-50 text-gray-600 rounded-xl hover:bg-gray-100 border border-gray-200 transition-all flex items-center justify-center relative"
             onClick={() => {
               setShowNotifications(!showNotifications);
               setShowProfileMenu(false);
-            }}
-            className="p-2.5 bg-gray-50 text-gray-600 rounded-xl hover:bg-gray-100 border border-gray-200 transition-all flex items-center justify-center relative"
-          >
+            }}>
             <span className="text-xl">🔔</span>
             <span className="absolute top-1 right-1 w-2.5 h-2.5 bg-red-500 rounded-full border border-white animate-pulse"></span>
           </button>
@@ -82,13 +75,11 @@ const Header = ({ toggleSidebar }) => {
         {/* User Profile */}
         {user && (
           <div className="relative">
-            <button
+            <button  className="flex items-center gap-3 p-1.5 pr-3 hover:bg-gray-50 rounded-xl border border-transparent hover:border-gray-200 transition-all"
               onClick={() => {
                 setShowProfileMenu(!showProfileMenu);
                 setShowNotifications(false);
-              }}
-              className="flex items-center gap-3 p-1.5 pr-3 hover:bg-gray-50 rounded-xl border border-transparent hover:border-gray-200 transition-all"
-            >
+              }}>
               <div className="w-10 h-10 rounded-full bg-gradient-to-r from-blue-500 to-indigo-500 flex items-center justify-center text-white font-bold shadow-md">
                 {user.fullName?.charAt(0) || 'U'}
               </div>
@@ -106,24 +97,13 @@ const Header = ({ toggleSidebar }) => {
                   <p className="text-xs text-gray-500 truncate">{user.email}</p>
                 </div>
                 <div className="p-2 space-y-1">
-                  <Link
-                    to="/profile"
-                    onClick={() => setShowProfileMenu(false)}
-                    className="flex items-center gap-3 px-3 py-2 rounded-lg text-sm text-gray-700 hover:bg-gray-100"
-                  >
+                  <Link className="flex items-center gap-3 px-3 py-2 rounded-lg text-sm text-gray-700 hover:bg-gray-100" to="/profile" onClick={() => setShowProfileMenu(false)}>
                     <span>👤</span> My Profile
                   </Link>
-                  <Link
-                    to="/settings"
-                    onClick={() => setShowProfileMenu(false)}
-                    className="flex items-center gap-3 px-3 py-2 rounded-lg text-sm text-gray-700 hover:bg-gray-100"
-                  >
+                  <Link className="flex items-center gap-3 px-3 py-2 rounded-lg text-sm text-gray-700 hover:bg-gray-100" to="/settings" onClick={() => setShowProfileMenu(false)}>
                     <span>⚙️</span> Settings
                   </Link>
-                  <button
-                    onClick={handleLogout}
-                    className="w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm text-red-600 hover:bg-red-50 text-left font-medium"
-                  >
+                  <button onClick={handleLogout} className="w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm text-red-600 hover:bg-red-50 text-left font-medium">
                     <span>🚪</span> Logout
                   </button>
                 </div>

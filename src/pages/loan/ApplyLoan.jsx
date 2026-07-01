@@ -97,24 +97,15 @@ const ApplyLoan = () => {
       <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
         <div className="bg-gradient-to-r from-blue-600 to-indigo-600 px-8 py-6">
           <h2 className="text-2xl font-bold text-white">Apply for Loan</h2>
-          <p className="text-blue-100 mt-1">
-            Get instant approval and quick disbursal
-          </p>
+          <p className="text-blue-100 mt-1">Get instant approval and quick disbursal</p>
         </div>
 
         <div className="p-8">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <div className="space-y-6">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Loan Amount (₹)
-                </label>
-                <input
-                  type="number"
-                  name="amount"
-                  value={loanDetails.amount}
-                  onChange={handleInputChange}
-                  placeholder="Enter amount"
+                <label className="block text-sm font-medium text-gray-700 mb-2">Loan Amount (₹)</label>
+                <input type="number" name="amount" value={loanDetails.amount} onChange={handleInputChange} placeholder="Enter amount"
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
                 />
                 {loanDetails.amount && (
@@ -125,8 +116,7 @@ const ApplyLoan = () => {
                     </div>
                     <div className="relative pt-1">
                       <div className="overflow-hidden h-2 text-xs flex rounded bg-gray-200">
-                        <div
-                          style={{ width: `${Math.min((loanDetails.amount / 5000000) * 100, 100)}%` }}
+                        <div style={{ width: `${Math.min((loanDetails.amount / 5000000) * 100, 100)}%` }}
                           className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-blue-500"
                         />
                       </div>
@@ -136,15 +126,9 @@ const ApplyLoan = () => {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Loan Purpose
-                </label>
-                <select
-                  name="purpose"
-                  value={loanDetails.purpose}
-                  onChange={handleInputChange}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
-                >
+                <label className="block text-sm font-medium text-gray-700 mb-2">Loan Purpose</label>
+                <select name="purpose" value={loanDetails.purpose} onChange={handleInputChange}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
                   <option value="personal">Personal Loan</option>
                   <option value="home">Home Loan</option>
                   <option value="car">Car Loan</option>
@@ -155,19 +139,9 @@ const ApplyLoan = () => {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Tenure (Months)
-                </label>
-                <input
-                  type="range"
-                  name="tenure"
-                  min="6"
-                  max="60"
-                  step="6"
-                  value={loanDetails.tenure}
-                  onChange={handleInputChange}
-                  className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-blue-600 focus:outline-none"
-                />
+                <label className="block text-sm font-medium text-gray-700 mb-2">Tenure (Months)</label>
+                <input type="range" name="tenure" min="6" max="60" step="6" value={loanDetails.tenure} onChange={handleInputChange}
+                  className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-blue-600 focus:outline-none" />
                 <div className="relative w-full h-6 mt-1.5">
                   {[
                     { value: 6, percent: 0, align: 'left' },
@@ -180,21 +154,20 @@ const ApplyLoan = () => {
                     let style = { position: 'absolute' };
                     if (tick.align === 'left') {
                       style.left = '0%';
-                    } else if (tick.align === 'right') {
+                    }
+                    else if (tick.align === 'right') {
                       style.right = '0%';
-                    } else {
+                    }
+                    else {
                       style.left = `${tick.percent}%`;
                       style.transform = 'translateX(-50%)';
                     }
                     const isActive = parseInt(loanDetails.tenure) === tick.value;
                     return (
-                      <span
-                        key={tick.value}
+                      <span key={tick.value} style={style}
                         className={`text-xs transition-colors duration-200 ${
                           isActive ? 'text-blue-600 font-bold scale-110' : 'text-gray-500'
-                        }`}
-                        style={style}
-                      >
+                        }`}>
                         {tick.value}
                       </span>
                     );
@@ -239,27 +212,19 @@ const ApplyLoan = () => {
               <div className="mt-6 p-4 bg-blue-50 rounded-lg">
                 <div className="flex items-center justify-between">
                   <span className="text-sm font-medium text-gray-700">Eligibility Status:</span>
-                  <span className={`font-bold ${getEligibilityColor()}`}>
-                    {eligibility.eligible ? '✅ Eligible' : '❌ Not Eligible'}
-                  </span>
+                  <span className={`font-bold ${getEligibilityColor()}`}>{eligibility.eligible ? '✅ Eligible' : '❌ Not Eligible'}</span>
                 </div>
                 <p className="text-xs text-gray-600 mt-2">{eligibility.message}</p>
                 {!eligibility.eligible && eligibility.maxAmount > 0 && (
-                  <p className="text-xs text-blue-600 mt-1">
-                    Maximum eligible amount: ₹{eligibility.maxAmount.toLocaleString()}
-                  </p>
+                  <p className="text-xs text-blue-600 mt-1">Maximum eligible amount: ₹{eligibility.maxAmount.toLocaleString()}</p>
                 )}
               </div>
             </div>
           </div>
 
           <div className="mt-8 flex gap-4">
-            <Button onClick={handleSubmit} className="flex-1" disabled={!loanDetails.amount || !eligibility.eligible}>
-              Apply for Loan
-            </Button>
-            <button className="px-6 py-2 border border-gray-300 rounded-lg hover:bg-gray-50">
-              Save Draft
-            </button>
+            <Button onClick={handleSubmit} className="flex-1" disabled={!loanDetails.amount || !eligibility.eligible}>Apply for Loan</Button>
+            <button className="px-6 py-2 border border-gray-300 rounded-lg hover:bg-gray-50">Save Draft</button>
           </div>
         </div>
       </div>
@@ -269,11 +234,7 @@ const ApplyLoan = () => {
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm transition-opacity duration-300">
           <div className="bg-white rounded-2xl shadow-2xl p-8 max-w-md w-full relative transform scale-100 transition-all duration-300 border border-gray-100">
             {/* Close Icon Button */}
-            <button
-              onClick={() => setShowSuccessPopup(false)}
-              className="absolute top-4 right-4 p-1 rounded-full text-gray-400 hover:text-gray-600 hover:bg-gray-100 transition-colors"
-              aria-label="Close"
-            >
+            <button onClick={() => setShowSuccessPopup(false)} className="absolute top-4 right-4 p-1 rounded-full text-gray-400 hover:text-gray-600 hover:bg-gray-100 transition-colors" aria-label="Close">
               <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
               </svg>
@@ -288,32 +249,16 @@ const ApplyLoan = () => {
 
             {/* Content */}
             <div className="text-center">
-              <h3 className="text-2xl font-bold text-gray-900 mb-2">
-                Application Submitted Successfully!
-              </h3>
-              <p className="text-gray-500 text-sm mb-6">
-                Thank you for your application.
-              </p>
+              <h3 className="text-2xl font-bold text-gray-900 mb-2">Application Submitted Successfully!</h3>
+              <p className="text-gray-500 text-sm mb-6">Thank you for your application.</p>
               <div className="bg-blue-50/50 border border-blue-100/50 rounded-xl py-3 px-4 mb-6">
-                <p className="text-sm text-blue-700 font-medium font-sans">
-                  Redirecting to Home page in <span className="font-bold text-lg text-blue-800">{countdown}</span> seconds...
-                </p>
+                <p className="text-sm text-blue-700 font-medium font-sans">Redirecting to Home page in <span className="font-bold text-lg text-blue-800">{countdown}</span> seconds...</p>
               </div>
               
               {/* Manual Actions */}
               <div className="flex flex-col gap-2">
-                <Button
-                  onClick={() => navigate('/')}
-                  className="w-full py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl font-medium transition-colors"
-                >
-                  Go to Home Now
-                </Button>
-                <button
-                  onClick={() => setShowSuccessPopup(false)}
-                  className="w-full py-2 text-sm text-gray-500 hover:text-gray-700 font-medium transition-colors"
-                >
-                  Dismiss
-                </button>
+                <Button onClick={() => navigate('/')} className="w-full py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl font-medium transition-colors">Go to Home Now</Button>
+                <button onClick={() => setShowSuccessPopup(false)} className="w-full py-2 text-sm text-gray-500 hover:text-gray-700 font-medium transition-colors">Dismiss</button>
               </div>
             </div>
           </div>

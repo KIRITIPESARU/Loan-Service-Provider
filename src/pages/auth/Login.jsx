@@ -21,9 +21,11 @@ const Login = () => {
     try {
       await login(formData);
       navigate('/dashboard');
-    } catch (error) {
+    }
+    catch (error) {
       console.error('Login failed:', error);
-    } finally {
+    }
+    finally {
       setLoading(false);
     }
   };
@@ -37,49 +39,22 @@ const Login = () => {
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-6">
-          <Input
-            label="Email Address"
-            type="email"
-            value={formData.email}
-            onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-            placeholder="john@example.com"
-            required
-          />
-
-          <Input
-            label="Password"
-            type="password"
-            value={formData.password}
-            onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-            placeholder="••••••••"
-            required
-          />
-
+          <Input label="Email Address" type="email" value={formData.email} onChange={(e) => setFormData({ ...formData, email: e.target.value })} placeholder="john@example.com" required />
+          <Input label="Password" type="password" value={formData.password} onChange={(e) => setFormData({ ...formData, password: e.target.value })} placeholder="••••••••" required />
+          <Input label="Password" type="password" value={formData.password} onChange={(e) => setFormData({ ...formData, password: e.target.value })} placeholder="••••••••" required />
           <div className="flex items-center justify-between">
             <label className="flex items-center">
-              <input
-                type="checkbox"
-                checked={formData.rememberMe}
-                onChange={(e) => setFormData({ ...formData, rememberMe: e.target.checked })}
-                className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
-              />
+              <input type="checkbox" checked={formData.rememberMe} onChange={(e) => setFormData({ ...formData, rememberMe: e.target.checked })} className="rounded border-gray-300 text-blue-600 focus:ring-blue-500" />
               <span className="ml-2 text-sm text-gray-600">Remember me</span>
             </label>
-            <Link to="/forgot-password" className="text-sm text-blue-600 hover:text-blue-700">
-              Forgot password?
-            </Link>
+            <Link to="/forgot-password" className="text-sm text-blue-600 hover:text-blue-700">Forgot password?</Link>
           </div>
-
-          <Button type="submit" loading={loading} className="w-full">
-            Sign In
-          </Button>
+          <Button type="submit" loading={loading} className="w-full">Sign In</Button>
         </form>
-
+        
         <p className="text-center text-gray-600 mt-6">
           Don't have an account?{' '}
-          <Link to="/register" className="text-blue-600 hover:text-blue-700 font-medium">
-            Sign up
-          </Link>
+          <Link to="/register" className="text-blue-600 hover:text-blue-700 font-medium">Sign up</Link>
         </p>
       </div>
     </div>

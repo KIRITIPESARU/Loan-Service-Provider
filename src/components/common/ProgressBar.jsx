@@ -19,25 +19,18 @@ const ProgressBar = ({ steps = [], currentStep }) => {
         {steps.map((step) => {
           const isCompleted = step.id < currentStep;
           const isActive = step.id === currentStep;
-
           return (
             <div key={step.id} className="flex flex-col items-center relative z-10">
-              <div
-                className={`w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm transition-all duration-300 shadow-md ${
+              <div className={`w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm transition-all duration-300 shadow-md ${
                   isCompleted
                     ? 'bg-green-500 text-white ring-4 ring-green-100'
                     : isActive
                     ? 'bg-blue-600 text-white ring-4 ring-blue-100'
                     : 'bg-white text-gray-400 border border-gray-300'
-                }`}
-              >
+                }`}>
                 {isCompleted ? '✓' : step.id}
               </div>
-              <span
-                className={`text-xs font-semibold mt-2 ${
-                  isActive ? 'text-blue-600 font-bold' : 'text-gray-500'
-                }`}
-              >
+              <span className={`text-xs font-semibold mt-2 ${isActive ? 'text-blue-600 font-bold' : 'text-gray-500'}`}>
                 {step.name}
               </span>
             </div>
