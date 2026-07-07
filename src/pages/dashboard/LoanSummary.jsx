@@ -6,7 +6,6 @@ const LoanSummary = ({ data, nextPaymentDate }) => {
   const [localData, setLocalData] = useState(null);
   const [loading, setLoading] = useState(!data);
   const { get } = useApi();
-
   useEffect(() => {
     if (!data) {
       const fetchData = async () => {
@@ -33,10 +32,8 @@ const LoanSummary = ({ data, nextPaymentDate }) => {
       </div>
     );
   }
-
   if (!displayData) return null;
   const { totalEmi, nextDue, loans = [] } = displayData;
-
   return (
     <div className="bg-white rounded-2xl shadow-md border border-slate-100 overflow-hidden">
       <div className="px-6 py-5 border-b border-slate-100 flex justify-between items-center">
