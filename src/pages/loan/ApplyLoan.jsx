@@ -95,9 +95,16 @@ const ApplyLoan = () => {
   return (
     <div className="max-w-4xl mx-auto p-6">
       <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
-        <div className="bg-gradient-to-r from-blue-600 to-indigo-600 px-8 py-6">
-          <h2 className="text-2xl font-bold text-white">Apply for Loan</h2>
-          <p className="text-blue-100 mt-1">Get instant approval and quick disbursal</p>
+        <div className="bg-gradient-to-r from-blue-600 to-indigo-600 px-8 py-6 flex items-center gap-4">
+          <button onClick={() => navigate(-1)} className="p-2 bg-white/10 hover:bg-white/20 rounded-full transition-colors text-white" aria-label="Go back">
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+            </svg>
+          </button>
+          <div>
+            <h2 className="text-2xl font-bold text-white">Apply for Loan</h2>
+            <p className="text-blue-100 mt-1">Get instant approval and quick disbursal</p>
+          </div>
         </div>
 
         <div className="p-8">
