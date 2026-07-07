@@ -1,7 +1,7 @@
-// src\routes\PrivateRoute.jsx
 import React from 'react';
-import { Navigate, Outlet } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import MainLayout from '../components/layout/MainLayout';
 
 const PrivateRoute = () => {
   const { isAuthenticated, loading } = useSelector((state) => state.auth);
@@ -12,7 +12,7 @@ const PrivateRoute = () => {
       </div>
     );
   }
-  return isAuthenticated ? <Outlet /> : <Navigate to="/login" />;
+  return isAuthenticated ? <MainLayout /> : <Navigate to="/login" />;
 };
 
 export default PrivateRoute;
