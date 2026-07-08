@@ -9,9 +9,9 @@ import BottomNav from './BottomNav';
 const MainLayout = () => {
   const [sidebarOpen, setSidebarOpen] = React.useState(true);
   return (
-    <div className="flex h-screen bg-slate-50 overflow-hidden">
+    <div className="flex bg-[#f3f4f6] h-screen overflow-hidden">
       <Sidebar isOpen={sidebarOpen} setIsOpen={setSidebarOpen} />
-      <div className={`flex-1 flex flex-col overflow-hidden relative transition-all duration-300 w-full ${sidebarOpen ? 'md:ml-72' : 'md:ml-20'}`}>
+      <div className={`flex-1 flex flex-col overflow-hidden relative transition-all duration-300 w-full ${sidebarOpen ? 'md:ml-[272px]' : 'md:ml-[80px]'}`}>
         <Header toggleSidebar={() => setSidebarOpen(!sidebarOpen)} />
         <main className="flex-1 overflow-y-auto p-4 md:p-6 pb-24 md:pb-6 relative z-0">
           <Outlet />
