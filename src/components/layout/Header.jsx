@@ -27,12 +27,6 @@ const Header = ({ toggleSidebar }) => {
     <header className="h-20 bg-white border-b border-gray-200 px-6 flex items-center justify-between shadow-sm z-10">
       {/* Search Bar / Menu Button */}
       <div className="flex items-center gap-4">
-        {/* Toggle Button now visible on md and up, hidden on mobile since mobile uses BottomNav */}
-        <button onClick={toggleSidebar} className="hidden md:block p-2 text-gray-500 hover:bg-gray-100 rounded-lg transition-colors">
-          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-          </svg>
-        </button>
         <div className="hidden md:flex items-center gap-2 bg-gray-50 px-4 py-2 rounded-xl border border-gray-200 w-80">
           <span className="text-gray-400">🔍</span>
           <input type="text" placeholder="Search loans, transactions, tickets..."
