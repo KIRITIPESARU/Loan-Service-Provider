@@ -19,8 +19,8 @@ const RepaymentHistory = () => {
     setLoading(true);
     try {
       const data = await get(`/user/repayments?page=${currentPage}&status=${filter}`);
-      setRepayments(data.repayments);
-      setTotalPages(data.totalPages);
+      setRepayments(data?.repayments || []);
+      setTotalPages(data?.totalPages || 1);
     }
     catch (error) { console.error('Failed to fetch repayments:', error); }
     finally { setLoading(false); }
@@ -94,7 +94,7 @@ const RepaymentHistory = () => {
                     </div>
                   </td>
                 </tr>
-              ) : repayments.length === 0 ? (
+              ) : !repayments || repayments.length === 0 ? (
                 <tr>
                   <td colSpan="7" className="px-6 py-12 text-center">
                     <div className="text-4xl mb-2">📭</div>
@@ -102,7 +102,7 @@ const RepaymentHistory = () => {
                   </td>
                 </tr>
               ) : (
-                repayments.map((repayment) => (
+                (repayments || []).map((repayment) => (
                   <tr key={repayment.id} className="hover:bg-gray-50">
                     <td className="px-6 py-4 text-sm font-mono text-gray-900">{repayment.repaymentId}</td>
                     <td className="px-6 py-4 text-sm font-mono text-gray-600">{repayment.loanId}</td>
