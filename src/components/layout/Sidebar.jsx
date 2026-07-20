@@ -151,20 +151,7 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
   return (
     <>
       <aside className={`hidden md:flex flex-col fixed top-3 left-3 bottom-3 bg-white/60 backdrop-blur-xl border border-gray-200 shadow-sm rounded-[24px] z-30 transition-all duration-300 overflow-hidden ${isOpen ? 'w-[260px]' : 'w-[68px]'}`}>
-        
-        {/* Top Logo & Header - Fixed at top */}
         <div className={`flex items-center mt-5 mb-4 ${isOpen ? 'px-5 gap-3' : 'justify-center mx-auto w-full'}`}>
-          <div className="w-[34px] h-[34px] bg-[#0c1f40] rounded-[10px] shadow-sm flex items-center justify-center shrink-0">
-            <svg className="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-            </svg>
-          </div>
-          {isOpen && (
-            <div className="flex flex-col truncate pr-2">
-              <span className="text-[14px] font-semibold text-gray-900 tracking-tight truncate">Skyline Ventures</span>
-              <span className="text-[11px] text-gray-500 truncate">@sky-ventures</span>
-            </div>
-          )}
           {isOpen && (
             <button onClick={() => setIsOpen(false)} className="ml-auto p-1.5 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-md transition-colors shrink-0 cursor-pointer">
               <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -177,11 +164,7 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
         {/* Toggle Button - Fixed at top when sidebar is closed */}
         {!isOpen && (
           <div className="absolute top-3 right-3">
-            <button 
-              onClick={() => setIsOpen(true)} 
-              className="p-1.5 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-md transition-colors cursor-pointer"
-              title="Expand Sidebar"
-            >
+            <button onClick={() => setIsOpen(true)} className="p-1.5 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-md transition-colors cursor-pointer" title="Expand Sidebar">
               <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M13 5l7 7-7 7M5 5l7 7-7 7" />
               </svg>
@@ -196,15 +179,14 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
               <svg className="w-4 h-4 text-gray-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
               </svg>
-              <input type="text" placeholder="Search" className="bg-transparent text-[13px] outline-none w-full text-gray-700 placeholder-gray-400" />
-              <span className="text-[10px] font-medium text-gray-400 bg-white px-1.5 py-0.5 rounded shadow-sm shrink-0">⌘S</span>
+              {/* <input type="text" placeholder="Search" className="bg-transparent text-[13px] outline-none w-full text-gray-700 placeholder-gray-400" />
+              <span className="text-[10px] font-medium text-gray-400 bg-white px-1.5 py-0.5 rounded shadow-sm shrink-0">⌘S</span> */}
             </div>
           </div>
         )}
 
         {/* Main Navigation Scroll Area */}
         <div className="flex-1 overflow-y-auto overflow-x-hidden custom-scrollbar pb-4 flex flex-col gap-6">
-          
           {/* General Section */}
           <div>
             {isOpen && <div className="px-6 mb-2 text-[11px] font-medium text-gray-400">General</div>}
