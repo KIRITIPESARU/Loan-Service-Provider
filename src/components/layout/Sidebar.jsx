@@ -32,15 +32,21 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
   const [expandedMenus, setExpandedMenus] = useState({ tools: true, admin: false });
+  const isAdmin = user?.role === 'admin';
 
   // Map user structure
-  const generalMenus = [
+  const generalMenus = isAdmin ? [
+    { path: '/admin', icon: 'dashboard', label: 'Dashboard' },
+    { path: '/admin/users', icon: 'account', label: 'Users Management' },
+    { path: '/admin/loans', icon: 'loans', label: 'All Loans' },
+    { path: '/admin/reports', icon: 'reports', label: 'Reports' }
+  ] : [
     { path: '/dashboard', icon: 'dashboard', label: 'Dashboard', badge: '8' },
     { path: '/repayment-history', icon: 'activity', label: 'Activity' },
     { path: '/offers', icon: 'tasks', label: 'My Offers', badge: '5' },
   ];
 
-  const toolsMenus = [
+  const toolsMenus = isAdmin ? [] : [
     { path: '/credit-score', icon: 'chart', label: 'Credit Score' },
     { path: '/loans-summary', icon: 'loans', label: 'Loans Tracker' },
     { path: '/repayments', icon: 'card', label: 'Payments' },
@@ -131,7 +137,6 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
           <div className="mt-1 ml-6 relative">
             {/* Tree connecting line */}
             <div className="absolute left-[5px] top-0 bottom-3 w-[1px] bg-gray-200"></div>
-            
             <div className="flex flex-col gap-0.5">
               {item.children.map((child, index) => (
                 <div key={child.path} className="relative flex items-center">
@@ -198,18 +203,20 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
           </div>
 
           {/* Work Tools Section */}
-          <div>
-            {isOpen && <div className="px-6 mb-2 text-[11px] font-medium text-gray-400">Work tools</div>}
-            <div className="flex flex-col gap-0.5">
-              {toolsMenus.map((item) => 
-                item.children ? (
-                  <DropdownMenu key={item.path} item={item} isExpanded={expandedMenus.tools} onToggle={() => toggleMenu('tools')} />
-                ) : (
-                  <MenuItem key={item.path} item={item} />
-                )
-              )}
+          {toolsMenus.length > 0 && (
+            <div>
+              {isOpen && <div className="px-6 mb-2 text-[11px] font-medium text-gray-400">Work tools</div>}
+              <div className="flex flex-col gap-0.5">
+                {toolsMenus.map((item) => 
+                  item.children ? (
+                    <DropdownMenu key={item.path} item={item} isExpanded={expandedMenus.tools} onToggle={() => toggleMenu('tools')} />
+                  ) : (
+                    <MenuItem key={item.path} item={item} />
+                  )
+                )}
+              </div>
             </div>
-          </div>
+          )}
         </div>
 
         {/* Bottom Section */}

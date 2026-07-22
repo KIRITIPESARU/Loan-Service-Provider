@@ -14,13 +14,17 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
   const { login } = useAuth();
   const navigate = useNavigate();
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     try {
-      await login(formData);
-      navigate('/dashboard');
+      const user = await login(formData);
+      if (user?.role === 'admin') {
+        navigate('/admin');
+      }
+      else {
+        navigate('/dashboard');
+      }
     }
     catch (error) {
       console.error('Login failed:', error);
@@ -39,8 +43,17 @@ const Login = () => {
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-6">
+          <div className="flex gap-4 mb-2">
+            <button type="button" onClick={() => setFormData({ ...formData, email: 'admin@example.com', password: 'password123' })}
+              className="w-full py-2 px-4 border border-blue-600 text-blue-600 rounded-lg hover:bg-blue-50 transition-colors text-sm font-medium">
+              Autofill Admin
+            </button>
+            <button type="button" onClick={() => setFormData({ ...formData, email: 'user@example.com', password: 'password123' })}
+              className="w-full py-2 px-4 border border-indigo-600 text-indigo-600 rounded-lg hover:bg-indigo-50 transition-colors text-sm font-medium">
+              Autofill User
+            </button>
+          </div>
           <Input label="Email Address" type="email" value={formData.email} onChange={(e) => setFormData({ ...formData, email: e.target.value })} placeholder="john@example.com" required />
-          <Input label="Password" type="password" value={formData.password} onChange={(e) => setFormData({ ...formData, password: e.target.value })} placeholder="••••••••" required />
           <Input label="Password" type="password" value={formData.password} onChange={(e) => setFormData({ ...formData, password: e.target.value })} placeholder="••••••••" required />
           <div className="flex items-center justify-between">
             <label className="flex items-center">
@@ -53,7 +66,7 @@ const Login = () => {
         </form>
         
         <p className="text-center text-gray-600 mt-6">
-          Don't have an account?{' '}
+          Don't have an account?
           <Link to="/register" className="text-blue-600 hover:text-blue-700 font-medium">Sign up</Link>
         </p>
       </div>
