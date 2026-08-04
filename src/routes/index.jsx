@@ -104,6 +104,7 @@ const AppRoutes = () => {
           <Route path="/support" element={<Support />} />
           <Route path="/loans-summary" element={<LoanSummary />} />
           <Route path="/repayments" element={<RepaymentHistory />} />
+          <Route path="/repayment-history" element={<RepaymentHistory />} />
           <Route path="/support/tickets/:id" element={<TicketDetails />} />
           <Route path="/documents" element={<MyDocuments />} />
           <Route path="/referral" element={<ReferralProgram />} />

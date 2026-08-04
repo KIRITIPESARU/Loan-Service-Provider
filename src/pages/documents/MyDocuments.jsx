@@ -23,7 +23,13 @@ const MyDocuments = () => {
   const fetchDocuments = async () => {
     try {
       const data = await get('/user/documents');
-      setDocuments(data);
+      if (data) {
+        setDocuments({
+          kyc: Array.isArray(data.kyc) ? data.kyc : [],
+          loan: Array.isArray(data.loan) ? data.loan : [],
+          others: Array.isArray(data.others) ? data.others : []
+        });
+      }
     }
     catch (error) {
       console.error('Failed to fetch documents:', error);
@@ -96,14 +102,14 @@ const MyDocuments = () => {
   return (
     <div className="max-w-6xl mx-auto p-6">
       <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
-        <div className="bg-gradient-to-r from-blue-600 to-indigo-600 px-8 py-6">
-          <div className="flex justify-between items-center">
+        <div className="bg-gradient-to-r from-blue-600 to-indigo-600 px-6 sm:px-8 py-6">
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
             <div>
               <h2 className="text-2xl font-bold text-white">My Documents</h2>
               <p className="text-blue-100 mt-1">Manage your uploaded documents</p>
             </div>
             <button onClick={() => setShowUpload(true)}
-              className="px-4 py-2 bg-white text-blue-600 rounded-lg font-medium hover:bg-blue-50">
+              className="w-full sm:w-auto px-4 py-2 bg-white text-blue-600 rounded-lg font-medium hover:bg-blue-50 transition-colors shadow-sm">
               + Upload Document
             </button>
           </div>

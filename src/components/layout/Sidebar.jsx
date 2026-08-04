@@ -78,7 +78,7 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
           ${isNested && active ? 'text-gray-900 font-medium' : ''}
         `}>
         {!isNested && (
-          <div className={active ? 'text-blue-600' : 'text-blue-600/70 group-hover:text-blue-600'}>
+          <div className={active ? 'text-[#1ca1de]' : 'text-gray-400 group-hover:text-[#1ca1de] transition-colors'}>
             <Icon name={item.icon} />
           </div>
         )}
@@ -110,7 +110,7 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
             ${!isOpen ? 'justify-center mx-auto w-10 h-10' : 'px-3 mx-2'}
             ${isExpanded && isOpen ? 'bg-gray-100 text-gray-900' : 'text-gray-500 hover:bg-gray-50 hover:text-gray-900'}
           `}>
-          <div className={activeChild || isExpanded ? 'text-blue-600' : 'text-blue-600/70 group-hover:text-blue-600'}>
+          <div className={activeChild || isExpanded ? 'text-[#1ca1de]' : 'text-gray-400 group-hover:text-[#1ca1de] transition-colors'}>
             <Icon name={item.icon} />
           </div>
           
@@ -150,7 +150,7 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
 
   return (
     <>
-      <aside className={`hidden md:flex flex-col fixed top-3 left-3 bottom-3 bg-white/60 backdrop-blur-xl border border-gray-200 shadow-sm rounded-[24px] z-30 transition-all duration-300 overflow-hidden ${isOpen ? 'w-[260px]' : 'w-[68px]'}`}>
+      <aside className={`hidden md:flex flex-col fixed top-0 left-0 bottom-0 bg-white border-r border-gray-200 z-30 transition-all duration-300 overflow-hidden ${isOpen ? 'w-[260px]' : 'w-[72px]'}`}>
         <div className={`flex items-center mt-5 mb-4 ${isOpen ? 'px-5 gap-3' : 'justify-center mx-auto w-full'}`}>
           {isOpen && (
             <button onClick={() => setIsOpen(false)} className="ml-auto p-1.5 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-md transition-colors shrink-0 cursor-pointer">
@@ -232,7 +232,7 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
             {user?.photoURL ? (
               <img src={user.photoURL} alt="User" className="w-[30px] h-[30px] rounded-full object-cover" />
             ) : (
-              <div className="w-[30px] h-[30px] rounded-full bg-gradient-to-tr from-slate-700 to-slate-800 flex items-center justify-center text-white text-[13px] font-bold">
+              <div className="w-[36px] h-[36px] rounded-full bg-gray-100 flex items-center justify-center text-gray-700 text-[14px] font-bold border border-gray-200">
                 {user?.fullName?.charAt(0) || 'U'}
               </div>
             )}
