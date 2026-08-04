@@ -2,6 +2,7 @@
 import React from 'react';
 import { Navigate, Outlet } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import AdminLayout from '../components/layout/AdminLayout';
 
 const AdminRoute = () => {
   const { isAuthenticated, user, loading } = useSelector((state) => state.auth);
@@ -12,7 +13,7 @@ const AdminRoute = () => {
       </div>
     );
   }
-  return isAuthenticated && user?.role === 'admin' ? <Outlet /> : <Navigate to="/unauthorized" />;
+  return isAuthenticated && user?.role === 'admin' ? <AdminLayout /> : <Navigate to="/unauthorized" />;
 };
 
 export default AdminRoute;

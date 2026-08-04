@@ -87,45 +87,45 @@ const Dashboard = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-50">
+    <div className="min-h-screen bg-[#f8f9fa]">
       <div className="max-w-[1440px] mx-auto px-4 md:px-6 py-6 md:py-8 space-y-7">
         {/* Welcome Banner */}
         <WelcomeBanner userName={user?.fullName?.split(' ')[0]} />
         {/* Stats Cards Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-5">
           <StatsCard title="Active Loans" value={stats.activeLoans}
-            icon={<i className="fas fa-layer-group text-xl text-blue-600"></i>}
+            icon={<i className="fas fa-layer-group text-xl text-[#1ca1de]"></i>}
             trend={stats.activeLoans > 0 ? { value: '+2', isPositive: true } : null}
-            gradient="from-blue-50 to-blue-100"
+            gradient="bg-[#e6f5fa]"
           />
           <StatsCard title="Total Borrowed" value={`₹${stats.totalBorrowed?.toLocaleString() || 0}`}
-            icon={<i className="fas fa-indian-rupee-sign text-xl text-emerald-600"></i>}
-            gradient="from-emerald-50 to-emerald-100"
+            icon={<i className="fas fa-indian-rupee-sign text-xl text-[#1ca1de]"></i>}
+            gradient="bg-[#e6f5fa]"
           />
           <StatsCard title="Next Payment" value={stats.nextPayment || "No Due"}
-            icon={<i className="fas fa-calendar-alt text-xl text-amber-600"></i>}
+            icon={<i className="fas fa-calendar-alt text-xl text-[#1ca1de]"></i>}
             subtitle={stats.nextPayment ? "in 12 days" : null}
-            gradient="from-amber-50 to-amber-100"
+            gradient="bg-[#e6f5fa]"
           />
           <StatsCard title="Credit Score" value={stats.creditScore || "N/A"}
-            icon={<i className="fas fa-chart-line text-xl text-violet-600"></i>}
+            icon={<i className="fas fa-chart-line text-xl text-[#1ca1de]"></i>}
             trend={stats.creditScore ? { value: '+12 pts', isPositive: true } : null}
-            gradient="from-violet-50 to-violet-100"
+            gradient="bg-[#e6f5fa]"
           />
         </div>
 
         {/* Feature Highlights */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <FeatureCard icon={<i className="fas fa-bolt text-2xl text-indigo-600"></i>}
-            title="Easy Application" iconBg="bg-indigo-50"
+          <FeatureCard icon={<i className="fas fa-bolt text-2xl text-[#1ca1de]"></i>}
+            title="Easy Application" iconBg="bg-[#e6f5fa]"
             description="Complete your loan application in just a few minutes."
           />
-          <FeatureCard icon={<i className="fas fa-file-alt text-2xl text-sky-600"></i>}
-            title="Paperless Process" iconBg="bg-sky-50"
+          <FeatureCard icon={<i className="fas fa-file-alt text-2xl text-[#1ca1de]"></i>}
+            title="Paperless Process" iconBg="bg-[#e6f5fa]"
             description="Upload documents digitally and track status online."
           />
-          <FeatureCard icon={<i className="fas fa-shield-alt text-2xl text-emerald-600"></i>}
-            title="Quick Verification" iconBg="bg-emerald-50"
+          <FeatureCard icon={<i className="fas fa-shield-alt text-2xl text-[#1ca1de]"></i>}
+            title="Quick Verification" iconBg="bg-[#e6f5fa]"
             description="Fast approval and verification powered by secure technology."  
           />
         </div>
