@@ -74,11 +74,11 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
       <Link to={item.path}
         className={`flex items-center gap-3 py-1.5 rounded-lg transition-all duration-200 group relative
           ${!isOpen ? 'justify-center mx-auto w-10 h-10' : 'px-3 mx-2'}
-          ${active && !isNested ? 'bg-gray-100 text-gray-900' : 'text-gray-500 hover:bg-gray-50 hover:text-gray-900'}
-          ${isNested && active ? 'text-gray-900 font-medium' : ''}
+          ${active && !isNested ? 'bg-indigo-600 text-white shadow-lg' : 'text-slate-400 hover:bg-slate-800 hover:text-white'}
+          ${isNested && active ? 'text-white font-medium' : ''}
         `}>
         {!isNested && (
-          <div className={active ? 'text-[#1ca1de]' : 'text-gray-400 group-hover:text-[#1ca1de] transition-colors'}>
+          <div className={active ? 'opacity-100 text-white' : 'opacity-80 group-hover:opacity-100 transition-colors'}>
             <Icon name={item.icon} />
           </div>
         )}
@@ -89,7 +89,7 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
               {item.label}
             </span>
             {item.badge && (
-              <span className="bg-gray-100 text-gray-400 text-[11px] font-bold px-1.5 py-0.5 rounded-md leading-none">
+              <span className={`text-[11px] font-bold px-1.5 py-0.5 rounded-md leading-none ${active && !isNested ? 'bg-indigo-500 text-white' : 'bg-slate-800 text-slate-300'}`}>
                 {item.badge}
               </span>
             )}
@@ -108,9 +108,9 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
           onClick={isOpen ? onToggle : () => { setIsOpen(true); setTimeout(onToggle, 150); }}
           className={`flex items-center gap-3 py-1.5 w-full rounded-lg transition-all duration-200 group
             ${!isOpen ? 'justify-center mx-auto w-10 h-10' : 'px-3 mx-2'}
-            ${isExpanded && isOpen ? 'bg-gray-100 text-gray-900' : 'text-gray-500 hover:bg-gray-50 hover:text-gray-900'}
+            ${isExpanded && isOpen ? 'bg-slate-800 text-white' : 'text-slate-400 hover:bg-slate-800 hover:text-white'}
           `}>
-          <div className={activeChild || isExpanded ? 'text-[#1ca1de]' : 'text-gray-400 group-hover:text-[#1ca1de] transition-colors'}>
+          <div className={activeChild || isExpanded ? 'opacity-100 text-white' : 'opacity-80 group-hover:opacity-100 transition-colors'}>
             <Icon name={item.icon} />
           </div>
           
@@ -120,7 +120,7 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
             </span>
           )}
           {isOpen && (
-            <svg className={`w-3.5 h-3.5 text-gray-400 transition-transform duration-200 ${isExpanded ? 'rotate-180' : ''}`}
+            <svg className={`w-3.5 h-3.5 text-slate-500 transition-transform duration-200 ${isExpanded ? 'rotate-180 text-slate-300' : ''}`}
               fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M19 9l-7 7-7-7" />
             </svg>
@@ -130,12 +130,12 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
         {isExpanded && isOpen && (
           <div className="mt-1 ml-6 relative">
             {/* Tree connecting line */}
-            <div className="absolute left-[5px] top-0 bottom-3 w-[1px] bg-gray-200"></div>
+            <div className="absolute left-[5px] top-0 bottom-3 w-[1px] bg-slate-700"></div>
             
             <div className="flex flex-col gap-0.5">
               {item.children.map((child, index) => (
                 <div key={child.path} className="relative flex items-center">
-                  <div className="absolute left-[5px] w-3 h-[1px] bg-gray-200"></div>
+                  <div className="absolute left-[5px] w-3 h-[1px] bg-slate-700"></div>
                   <div className="flex-1 ml-5">
                     <MenuItem item={child} isNested={true} />
                   </div>
@@ -150,10 +150,10 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
 
   return (
     <>
-      <aside className={`hidden md:flex flex-col fixed top-0 left-0 bottom-0 bg-white border-r border-gray-200 z-30 transition-all duration-300 overflow-hidden ${isOpen ? 'w-[260px]' : 'w-[72px]'}`}>
+      <aside className={`hidden md:flex flex-col fixed top-0 left-0 bottom-0 bg-slate-900 border-r border-slate-800 z-30 transition-all duration-300 overflow-hidden ${isOpen ? 'w-[260px]' : 'w-[72px]'}`}>
         <div className={`flex items-center mt-5 mb-4 ${isOpen ? 'px-5 gap-3' : 'justify-center mx-auto w-full'}`}>
           {isOpen && (
-            <button onClick={() => setIsOpen(false)} className="ml-auto p-1.5 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-md transition-colors shrink-0 cursor-pointer">
+            <button onClick={() => setIsOpen(false)} className="ml-auto p-1.5 text-slate-400 hover:text-white hover:bg-slate-800 rounded-md transition-colors shrink-0 cursor-pointer">
               <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M11 19l-7-7 7-7m8 14l-7-7 7-7" />
               </svg>
@@ -164,7 +164,7 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
         {/* Toggle Button - Fixed at top when sidebar is closed */}
         {!isOpen && (
           <div className="absolute top-3 right-3">
-            <button onClick={() => setIsOpen(true)} className="p-1.5 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-md transition-colors cursor-pointer" title="Expand Sidebar">
+            <button onClick={() => setIsOpen(true)} className="p-1.5 text-slate-400 hover:text-white hover:bg-slate-800 rounded-md transition-colors cursor-pointer" title="Expand Sidebar">
               <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M13 5l7 7-7 7M5 5l7 7-7 7" />
               </svg>
@@ -175,12 +175,12 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
         {/* Search Bar - Only when open */}
         {isOpen && (
           <div className="px-4 mb-6">
-            <div className="h-8 bg-gray-100 rounded-lg flex items-center px-3 gap-2">
-              <svg className="w-4 h-4 text-gray-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <div className="h-8 bg-slate-800 rounded-lg flex items-center px-3 gap-2">
+              <svg className="w-4 h-4 text-slate-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
               </svg>
-              {/* <input type="text" placeholder="Search" className="bg-transparent text-[13px] outline-none w-full text-gray-700 placeholder-gray-400" />
-              <span className="text-[10px] font-medium text-gray-400 bg-white px-1.5 py-0.5 rounded shadow-sm shrink-0">⌘S</span> */}
+              {/* <input type="text" placeholder="Search" className="bg-transparent text-[13px] outline-none w-full text-slate-200 placeholder-slate-500" />
+              <span className="text-[10px] font-medium text-slate-400 bg-slate-700 px-1.5 py-0.5 rounded shadow-sm shrink-0">⌘S</span> */}
             </div>
           </div>
         )}
@@ -189,7 +189,7 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
         <div className="flex-1 overflow-y-auto overflow-x-hidden custom-scrollbar pb-4 flex flex-col gap-6">
           {/* General Section */}
           <div>
-            {isOpen && <div className="px-6 mb-2 text-[11px] font-medium text-gray-400">General</div>}
+            {isOpen && <div className="px-6 mb-2 text-[11px] font-bold text-slate-500 uppercase tracking-wider">General</div>}
             <div className="flex flex-col gap-0.5">
               {generalMenus.map((item) => (
                 <MenuItem key={item.path} item={item} />
@@ -199,7 +199,7 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
 
           {/* Work Tools Section */}
           <div>
-            {isOpen && <div className="px-6 mb-2 text-[11px] font-medium text-gray-400">Work tools</div>}
+            {isOpen && <div className="px-6 mb-2 text-[11px] font-bold text-slate-500 uppercase tracking-wider">Work tools</div>}
             <div className="flex flex-col gap-0.5">
               {toolsMenus.map((item) => 
                 item.children ? (
@@ -213,12 +213,12 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
         </div>
 
         {/* Bottom Section */}
-        <div className="mt-4 pt-4 border-t border-gray-100 flex flex-col gap-1 pb-4">
+        <div className="mt-4 pt-4 border-t border-slate-800 flex flex-col gap-1 pb-4">
           {bottomMenus.map(item => (
             <Link key={item.path} to={item.path}
               className={`flex items-center gap-3 py-1.5 rounded-lg transition-all duration-200 group
                 ${!isOpen ? 'justify-center mx-auto w-10 h-10' : 'px-4'}
-                text-gray-400 hover:text-gray-600 hover:bg-gray-50
+                text-slate-400 hover:text-white hover:bg-slate-800
               `}>
               <Icon name={item.icon} />
               {isOpen && <span className="text-[13px] font-medium">{item.label}</span>}
@@ -227,25 +227,25 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
         </div>
 
         {/* User Card */}
-        <div className={`mx-3 mb-3 p-1.5 rounded-[12px] border border-gray-200 shadow-sm flex items-center transition-all ${isOpen ? 'gap-2.5' : 'justify-center'}`}>
+        <div className={`mx-3 mb-3 p-1.5 rounded-[12px] border border-slate-700 bg-slate-800/50 shadow-sm flex items-center transition-all ${isOpen ? 'gap-2.5' : 'justify-center'}`}>
           <div className="relative">
             {user?.photoURL ? (
               <img src={user.photoURL} alt="User" className="w-[30px] h-[30px] rounded-full object-cover" />
             ) : (
-              <div className="w-[36px] h-[36px] rounded-full bg-gray-100 flex items-center justify-center text-gray-700 text-[14px] font-bold border border-gray-200">
+              <div className="w-[36px] h-[36px] rounded-full bg-slate-700 flex items-center justify-center text-slate-200 text-[14px] font-bold border border-slate-600">
                 {user?.fullName?.charAt(0) || 'U'}
               </div>
             )}
-            <div className="absolute bottom-0 right-0 w-2 h-2 rounded-full bg-emerald-500 border border-white"></div>
+            <div className="absolute bottom-0 right-0 w-2 h-2 rounded-full bg-emerald-500 border border-slate-800"></div>
           </div>
           {isOpen && (
             <div className="flex flex-col flex-1 truncate pr-1">
-              <span className="text-[13.5px] font-semibold text-gray-900 truncate">{user?.fullName || 'Brendan Smitham'}</span>
-              <span className="text-[11px] text-gray-500 truncate">{user?.email || 'brendansmith@gmail.com'}</span>
+              <span className="text-[13.5px] font-semibold text-slate-100 truncate">{user?.fullName || 'Brendan Smitham'}</span>
+              <span className="text-[11px] text-slate-400 truncate">{user?.email || 'brendansmith@gmail.com'}</span>
             </div>
           )}
           {isOpen && (
-            <svg className="w-3.5 h-3.5 text-gray-400 shrink-0 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <svg className="w-3.5 h-3.5 text-slate-500 shrink-0 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 9l4-4 4 4m0 6l-4 4-4-4" />
             </svg>
           )}

@@ -9,7 +9,7 @@ const getMockUsers = () => {
   
   // Default mock users
   const defaults = [
-    { email: 'candidate@example.com', password: 'password123', role: 'user', fullName: 'Test Candidate' },
+    { email: 'candidate@example.com', password: 'password123', role: 'user', fullName: 'Test Client' },
     { email: 'admin@homeloan.com', password: 'adminpassword', role: 'admin', fullName: 'Admin User' }
   ];
   localStorage.setItem('mockUsers', JSON.stringify(defaults));

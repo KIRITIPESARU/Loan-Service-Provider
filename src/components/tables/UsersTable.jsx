@@ -11,14 +11,14 @@ const UsersTable = ({ users = [], showAll = false }) => {
     : users;
 
   return (
-    <div className="overflow-x-auto">
+    <div className="overflow-x-auto custom-scrollbar">
       <table className="min-w-full divide-y divide-gray-200">
         <thead className="bg-gray-50">
           <tr>
-            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">User</th>
-            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
-            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">KYC Status</th>
-            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Role</th>
+            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">User</th>
+            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">Email</th>
+            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">KYC Status</th>
+            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">Role</th>
           </tr>
         </thead>
         <tbody className="bg-white divide-y divide-gray-200">
@@ -29,25 +29,25 @@ const UsersTable = ({ users = [], showAll = false }) => {
           ) : (
             displayUsers.map((u) => (
               <tr key={u.id} className="hover:bg-gray-50">
-                <td className="px-6 py-4">
+                <td className="px-6 py-4 whitespace-nowrap">
                   <div className="flex items-center">
-                    <div className="h-8 w-8 rounded-full bg-gradient-to-r from-blue-500 to-indigo-500 flex items-center justify-center text-white font-bold text-sm shadow">
-                      {u.name?.charAt(0)}
+                    <div className="h-8 w-8 rounded-full bg-gradient-to-r from-blue-500 to-indigo-500 flex items-center justify-center text-white font-bold text-sm shadow flex-shrink-0">
+                      {u.name?.charAt(0) || u.fullName?.charAt(0) || 'U'}
                     </div>
-                    <span className="ml-3 font-semibold text-gray-800 text-sm">{u.name}</span>
+                    <span className="ml-3 font-semibold text-gray-800 text-sm truncate max-w-[150px]">{u.name || u.fullName}</span>
                   </div>
                 </td>
-                <td className="px-6 py-4 text-sm text-gray-600">{u.email}</td>
-                <td className="px-6 py-4">
+                <td className="px-6 py-4 text-sm text-gray-600 whitespace-nowrap truncate max-w-[180px]">{u.email}</td>
+                <td className="px-6 py-4 whitespace-nowrap">
                   <span className={`px-2.5 py-0.5 rounded-full text-xs font-semibold ${
                     u.kycStatus === 'verified' ? 'bg-green-100 text-green-800' :
                     u.kycStatus === 'pending' ? 'bg-yellow-100 text-yellow-800' :
                     'bg-red-100 text-red-800'
                   }`}>
-                    {u.kycStatus}
+                    {u.kycStatus || 'pending'}
                   </span>
                 </td>
-                <td className="px-6 py-4 text-sm capitalize text-gray-600">{u.role}</td>
+                <td className="px-6 py-4 text-sm capitalize text-gray-600 whitespace-nowrap">{u.role || 'user'}</td>
               </tr>
             ))
           )}

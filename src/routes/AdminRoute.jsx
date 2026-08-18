@@ -13,7 +13,8 @@ const AdminRoute = () => {
       </div>
     );
   }
-  return isAuthenticated && user?.role === 'admin' ? <AdminLayout /> : <Navigate to="/unauthorized" />;
+  if (!isAuthenticated) return <Navigate to="/login" />;
+  return user?.role === 'admin' ? <AdminLayout /> : <Navigate to="/unauthorized" />;
 };
 
 export default AdminRoute;
