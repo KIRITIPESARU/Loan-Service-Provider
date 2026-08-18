@@ -4,8 +4,9 @@ import { Navigate, Outlet } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 const PublicRoute = () => {
-  const { isAuthenticated } = useSelector((state) => state.auth);
-  return !isAuthenticated ? <Outlet /> : <Navigate to="/dashboard" />;
+  const { isAuthenticated, user } = useSelector((state) => state.auth);
+  if (!isAuthenticated) return <Outlet />;
+  return <Navigate to={user?.role === 'admin' ? '/admin' : '/dashboard'} replace />;
 };
 
 export default PublicRoute;

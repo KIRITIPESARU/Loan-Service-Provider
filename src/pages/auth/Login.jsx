@@ -1,12 +1,12 @@
 // src/pages/auth/Login.jsx
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
 import Input from '../../components/common/Input';
 import Button from '../../components/common/Button';
 
 const Login = () => {
-  const [role, setRole] = useState('candidate');
+  const [role, setRole] = useState('client');
   const [formData, setFormData] = useState({
     email: 'candidate@example.com',
     password: 'password123',
@@ -58,22 +58,27 @@ const Login = () => {
           </div>
         )}
 
-        {/* Role Toggle Tabs */}
-        <div className="flex bg-gray-100 p-1 rounded-xl mb-6">
-          <button 
-            type="button" 
-            onClick={() => handleRoleChange('candidate')}
-            className={`flex-1 py-2 rounded-lg font-bold text-sm transition-colors ${role === 'candidate' ? 'bg-white shadow-sm text-[#1ca1de]' : 'text-gray-500 hover:text-gray-700'}`}
-          >
-            👤 Candidate
-          </button>
-          <button 
-            type="button" 
-            onClick={() => handleRoleChange('admin')}
-            className={`flex-1 py-2 rounded-lg font-bold text-sm transition-colors ${role === 'admin' ? 'bg-white shadow-sm text-[#1ca1de]' : 'text-gray-500 hover:text-gray-700'}`}
-          >
-            🛡️ Admin
-          </button>
+        {/* Role Dropdown Select */}
+        <div className="mb-6">
+          <label htmlFor="roleSelect" className="block text-sm font-semibold text-[#333333] mb-2">
+            Select Role / Login As
+          </label>
+          <div className="relative">
+            <select
+              id="roleSelect"
+              value={role}
+              onChange={(e) => handleRoleChange(e.target.value)}
+              className="w-full appearance-none bg-gray-50 border border-gray-200 text-gray-800 text-sm font-semibold rounded-xl focus:ring-2 focus:ring-[#1ca1de] focus:border-transparent block p-3.5 pr-10 transition-all cursor-pointer shadow-sm hover:bg-gray-100/70"
+            >
+              <option value="client">👤 Client</option>
+              <option value="admin">🛡️ Admin</option>
+            </select>
+            <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3.5 text-gray-500">
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
+              </svg>
+            </div>
+          </div>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-5">
@@ -89,7 +94,7 @@ const Login = () => {
           />
           
           <div className="flex items-center justify-between">
-            <label className="flex items-center">
+            <label className="flex items-center cursor-pointer">
               <input type="checkbox" checked={formData.rememberMe} onChange={(e) => setFormData({ ...formData, rememberMe: e.target.checked })} className="rounded border-gray-300 text-[#1ca1de] focus:ring-[#1ca1de]" />
               <span className="ml-2 text-sm text-[#666666] font-medium">Remember me</span>
             </label>
@@ -101,24 +106,24 @@ const Login = () => {
           </Button>
         </form>
         
-        <p className="text-center text-[#666666] mt-6 font-medium">
+        <p className="text-center text-[#666666] mt-6 font-medium text-sm">
           Don't have an account?{' '}
           <Link to="/register" className="text-[#1ca1de] hover:text-[#158bbb] font-bold">Sign up</Link>
         </p>
 
         {/* Demo Credentials Hint */}
-        <div className="mt-8 bg-blue-50/50 border border-blue-100 rounded-lg p-4">
+        <div className="mt-8 bg-blue-50/50 border border-blue-100 rounded-xl p-4">
           <p className="text-xs font-bold text-[#1ca1de] uppercase tracking-wider mb-2">Demo Credentials</p>
-          <div className="flex gap-4 text-sm text-[#666666]">
-            <div>
-              <p className="font-semibold text-gray-800 flex items-center gap-1">👤 Candidate</p>
-              <p>User: candidate@example.com</p>
-              <p>Pass: password123</p>
+          <div className="grid grid-cols-2 gap-3 text-sm text-[#666666]">
+            <div className="bg-white p-3 rounded-lg border border-blue-100 shadow-xs">
+              <p className="font-semibold text-gray-800 flex items-center gap-1 mb-1 text-xs">👤 Client</p>
+              <p className="text-xs text-gray-600">User: <span className="font-mono text-gray-800 text-[11px]">candidate@example.com</span></p>
+              <p className="text-xs text-gray-600">Pass: <span className="font-mono text-gray-800 text-[11px]">password123</span></p>
             </div>
-            <div className="border-l border-blue-200 pl-4">
-              <p className="font-semibold text-gray-800 flex items-center gap-1">🛡️ Admin</p>
-              <p>User: admin@homeloan.com</p>
-              <p>Pass: adminpassword</p>
+            <div className="bg-white p-3 rounded-lg border border-blue-100 shadow-xs">
+              <p className="font-semibold text-gray-800 flex items-center gap-1 mb-1 text-xs">🛡️ Admin</p>
+              <p className="text-xs text-gray-600">User: <span className="font-mono text-gray-800 text-[11px]">admin@homeloan.com</span></p>
+              <p className="text-xs text-gray-600">Pass: <span className="font-mono text-gray-800 text-[11px]">adminpassword</span></p>
             </div>
           </div>
         </div>

@@ -11,15 +11,15 @@ const LoansTable = ({ loans = [], showAll = false }) => {
     : loans;
 
   return (
-    <div className="overflow-x-auto">
+    <div className="overflow-x-auto custom-scrollbar">
       <table className="min-w-full divide-y divide-gray-200">
         <thead className="bg-gray-50">
           <tr>
-            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Loan ID</th>
-            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Borrower</th>
-            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Amount</th>
-            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Purpose</th>
-            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">Loan ID</th>
+            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">Borrower</th>
+            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">Amount</th>
+            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">Purpose</th>
+            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">Status</th>
           </tr>
         </thead>
         <tbody className="bg-white divide-y divide-gray-200">
@@ -29,17 +29,17 @@ const LoansTable = ({ loans = [], showAll = false }) => {
             </tr>
           ) : (
             displayLoans.map((l) => (
-              <tr key={l.id} className="hover:bg-gray-50">
-                <td className="px-6 py-4 text-sm font-semibold text-blue-600">{l.id}</td>
-                <td className="px-6 py-4 text-sm text-gray-800 font-medium">{l.user}</td>
-                <td className="px-6 py-4 text-sm font-bold text-gray-900">₹{l.amount.toLocaleString()}</td>
-                <td className="px-6 py-4 text-sm capitalize text-gray-600">{l.purpose}</td>
-                <td className="px-6 py-4">
-                  <span className={`px-2.5 py-0.5 rounded-full text-xs font-semibold ${
-                    l.status === 'disbursed' || l.status === 'active' ? 'bg-green-100 text-green-800' :
-                    l.status === 'approved' ? 'bg-blue-100 text-blue-800' :
-                    l.status === 'pending' ? 'bg-yellow-100 text-yellow-800' :
-                    'bg-red-100 text-red-800'
+              <tr key={l.id || l.loanId} className="hover:bg-gray-50">
+                <td className="px-6 py-4 text-sm font-semibold text-indigo-600 whitespace-nowrap">{l.id || l.loanId}</td>
+                <td className="px-6 py-4 text-sm text-gray-800 font-medium whitespace-nowrap truncate max-w-[150px]">{l.user || l.borrowerName}</td>
+                <td className="px-6 py-4 text-sm font-bold text-gray-900 whitespace-nowrap">₹{(l.amount || 0).toLocaleString()}</td>
+                <td className="px-6 py-4 text-sm capitalize text-gray-600 whitespace-nowrap">{l.purpose || 'General'}</td>
+                <td className="px-6 py-4 whitespace-nowrap">
+                  <span className={`px-2.5 py-0.5 rounded-full text-xs font-bold uppercase tracking-wider ${
+                    l.status === 'disbursed' || l.status === 'active' ? 'bg-emerald-100 text-emerald-800' :
+                    l.status === 'approved' ? 'bg-indigo-100 text-indigo-800' :
+                    l.status === 'pending' ? 'bg-amber-100 text-amber-800' :
+                    'bg-rose-100 text-rose-800'
                   }`}>
                     {l.status}
                   </span>

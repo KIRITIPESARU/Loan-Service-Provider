@@ -1,6 +1,5 @@
-// src\routes\index.jsx
 import React from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import PrivateRoute from './PrivateRoute';
 import AdminRoute from './AdminRoute';
 import PublicRoute from './PublicRoute';
@@ -73,6 +72,9 @@ const AppRoutes = () => {
   return (
     <BrowserRouter>
       <Routes>
+        {/* Root Redirect to Login */}
+        <Route path="/" element={<Navigate to="/login" replace />} />
+
         {/* Public Routes */}
         <Route element={<PublicRoute />}>
           <Route path="/login" element={<Login />} />
@@ -87,7 +89,6 @@ const AppRoutes = () => {
 
         {/* Protected User Routes */}
         <Route element={<PrivateRoute />}>
-          <Route path="/" element={<Dashboard />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/credit-score" element={<CreditScore />} />
           <Route path="/kyc" element={<KYCVerification />} />
